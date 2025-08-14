@@ -15,104 +15,296 @@
       href="https://fonts.googleapis.com/css2?family=Nata+Sans:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" type="image/x-icon" href="assets/logomain.png">
+    <link rel="icon" href="assets/logomain.png" />
   </head>
 
-
-<body>
-
-<header>
-   <div class="logo">
-    <img src="assets/logo.png" alt="Polina - Mercado de produtos do leste europeu">
-  </div>
-  <nav>
-    <ul>
-      <li><a href="#sobre-nos">Sobre nós</a></li>
-      <li><a href="#servicos">Serviços</a>
-      <ul class="submenu">
-        <li><a href="#">TeleEntrega</a></li>
-          <li><a href="#">Retirada</a></li>
-      </ul></li>
-      <li>
-        <a href="#produtos">Produtos</a>
-        <ul class="submenu">
-          <li><a href="#">Alimentos não perecíveis</a></li>
-          <li><a href="#">Alimentos típicos</a></li>
-          <li><a href="#">Hortaliças</a></li>
-          <li><a href="#">Limpeza</a></li>
-          <li><a href="#">Higiene</a></li>
+  <body>
+    <header>
+      <div class="logo">
+        <img
+          src="assets/logo.png"
+          alt="Polina - Mercado de produtos do leste europeu"
+        />
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#sobre-nos">Sobre nós</a></li>
+          <li>
+            <a href="#servicos">Serviços</a>
+            <ul class="submenu">
+              <li><a href="#">TeleEntrega</a></li>
+              <li><a href="#">Retirada</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#produtos">Produtos</a>
+            <ul class="submenu">
+              <li>
+                <a href="./produtos-nao-pereciveis.html"
+                  >Alimentos não perecíveis</a
+                >
+              </li>
+              <li><a href="./alimentos-tipicos.html">Alimentos típicos</a></li>
+              <li><a href="./verduras.html">Hortaliças</a></li>
+              <li><a href="./limpeza.html">Limpeza</a></li>
+              <li><a href="./higiene.html">Higiene</a></li>
+            </ul>
+          </li>
+          <li><a href="./contato.html">contato</a></li>
         </ul>
-      </li>
-      <li><a href="#">Contato</a></li>
-    </ul>
-  </nav>
-</header>
-<main class="main">
-  <section class="carossel">
-      <div class="slideAtivo">
-        <img src="slide1.jpg" alt="Bem Vindo ao site">
-      </div>
-      <div class="slide">
-        <img src="slide2.jpg" alt="Alimentos frescos">
-      </div>
-      <div class="slide">
-        <img src="slide3.jpg" alt="Serviços de entrega">
-      </div>
+        <ul>
+          <li><a href="#cadastro">Cadastro</a><img src="assets/cadastro.svg"></li>
+          <li><a href="#login">Login</a><img src="assets/login.svg"></li>
+        </ul>
+      </nav>
+    </header>
+    <main class="main">
+      <section class="carossel">
+        <div class="slideAtivo">
+          <img src="slide1.jpg" alt="Bem Vindo ao site" />
+        </div>
+        <div class="slide">
+          <img src="slide2.jpg" alt="Alimentos típicos" />
+        </div>
+        <div class="slide">
+          <img src="slide3.jpg" alt="Serviços de entrega" />
+        </div>
 
-      <button class="anterior">&#10094;</button>
-      <button class="proximo">&#10095;</button>
+        <button class="anterior">
+          <img src="./assets/chevron_left.svg" alt="" />
+        </button>
+        <button class="proximo">
+          <img src="./assets/chevron_right.svg" />
+        </button>
+
+        <div class="dots">
+          <span class="dotAtual"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+      </section>
+      <section id="sobre-nos">
+        <h2>Sobre nós</h2>
+        <p>
+          O Mercado Polina nasceu da dificuldade da nossa família em encontrar
+          produtos típicos sérvios e de outros países balcãs e eslavos para
+          manter vivas suas tradições. Com esse propósito, reunimos em um só
+          lugar itens autênticos que raramente se encontram em Porto Alegre,
+          além de produtos do dia a dia, sempre com destaque para os sabores e
+          culturas da nossa origem.
+        </p>
+      </section>
+
+      <section id="servicos">
+        <h2>Serviços</h2>
+        <p>Conheça os nossos serviços para facilitar o seu dia a dia!</p>
+        <div class="grid-servicos">
+          <div class="servico">
+            <img src="assets/retiraricon.svg" alt="TeleEntrega" />
+            <h3>Tele Entrega</h3>
+            <p>
+              Selecione os seus produtos e entre em contato pelo whatsapp para
+              agendar a entrega.
+            </p>
+          </div>
+          <div class="servico">
+            <img src="./assets/IconShip.svg" alt="Retirada" />
+            <h3>Retirada</h3>
+            <p>Retire os seus produtos na loja mais próxima.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="produtos">
+        <h2>Produtos</h2>
+        <p>
+          Conheça as nossas categorias de produtos. Escolha uma para visualizar
+          os items.
+        </p>
+
+        <section id="categoria">
+          <label>
+            <a href="">Alimentos não perecíveis</a>
+            <img
+              src="./assets/cleaningback.webp"
+              alt=""
+              class="imagensCategorias"
+            />
+          </label>
+        </section>
+        <section id="categoria">
+          <label>
+            <a href="">Alimentos típicos</a>
+            <img src="./assets/tipicos.jpg" alt="" class="imagensCategorias" />
+          </label>
+        </section>
+        <section id="categoria">
+          <label>
+            <a href="">Higiene pessoal</a>
+            <img
+              src="./assets/selfcareback.jpg"
+              alt=""
+              class="imagensCategorias"
+            />
+          </label>
+        </section>
+        <section id="categoria">
+          <label>
+            <a href="">Limpeza</a>
+            <img
+              src="./assets/pereciveisback.jpeg"
+              alt=""
+              class="imagensCategorias"
+            />
+          </label>
+        </section>
+        <section id="categoria">
+          <label>
+            <a href="">Frutas e legumes</a>
+            <img
+              src="./assets/verdurasback.jpg"
+              alt=""
+              class="imagensCategorias"
+            />
+          </label>
+        </section>
+      </section>
 
       
-      <div class="dots">
-        <span class="dotAtual"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
+    </main>
+    <footer class="footer">
+      <div class="unidades">
+      <section class="footerListas">
+        <a href="contato.html">Moinhos</a>
+        <a href="contato.html">Gramado</a>
+      </section>
+      <div class="infoFooter">
+      <section class="footerListas">
+        <a href="#sobre-nos">Sobre Nós</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#produtos">Produtos</a>
+        <a href="#cadastro">contato</a>
+      </section>
+      <div class="containerLogoF">
+        <img src="assets/logo.png">
       </div>
-    </section>
-<section id="sobre-nos">
-  <h2>Sobre nós</h2>
-  <p> O Mercado Polina nasceu da dificuldade da nossa família em encontrar produtos típicos sérvios e de outros países balcãs e eslavos para manter vivas suas tradições. Com esse propósito, reunimos em um só lugar itens autênticos que raramente se encontram em Porto Alegre, além de produtos do dia a dia, sempre com destaque para os sabores e culturas da nossa origem.
-  </p>
-</section>
+      <section class="infosLaterais">
+        <div id="atendimentotel">
+          <h1>Central de atendimento:</h1> 
+          <a href="https://web.whatsapp.com/">(51) 99999-9999</a>
+        </div>
+        <div id="atendimentoinfo">
+          <p>Horário de atendimento: </br>
+          De segunda à sexta, das 08h às 18h
+          </p>
+        </div>
 
-<section id="servicos">
-  <h2>Serviços</h2>
-  <p>Conheça os nossos serviços para facilitar o seu dia a dia!</p>
-  <div class="grid-servicos">
-  <div class="servico"> 
-     <img src="assets/retiraricon.svg" alt="TeleEntrega">
-    <h3>Tele Entrega</h3>
-    <p>Selecione os seus produtos e entre em contato pelo whatsapp para agendar a entrega.</p>
-     </div>
-  <div class="servico"> 
-     <img src="./assets/IconShip.svg" alt="Retirada">
-    <h3>Retirada</h3>
-    <p>Retire os seus produtos na loja mais próxima.</p>
-     </div>
-</div>
-</section>
+      </section>
 
-<section id="produtos">
-  <h2>Produtos</h2>
-  <p>Conheça as nossas categorias de produtos. Escolha uma para visualizar os items.</p>
+      </div>
+    </footer>
+  <div id="cadastro">
+        <h2>Cadastro</h2>
+        <form action="#" method="post">
+        
+          <div>
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required />
+          </div>
 
+          
+          <div>
+            <label for="cpf">CPF</label>
+            <input type="text" id="cpf" name="cpf" required />
+          </div>
+          <div>
+            <label
+              ><input type="radio" name="genero" value="feminino" />
+              Feminino</label
+            >
+            <label
+              ><input type="radio" name="genero" value="masculino" />
+              Masculino</label
+            >
+            <label
+              ><input type="radio" name="genero" value="nao-informar" /> Prefiro
+              não dizer</label
+            >
+          </div>
+          
+           <div>
+            <label for="telefone">Telefone</label>
+            <input type="tel" id="telefone" name="telefone" />
+          </div>
 
-  <section id="alimentos-nao-pereciveis">
-    <a href="">Alimentos não perecíveis</a>
-    <img src="./" alt=""alimentos-nao-pereciveis>
-   <p></p>
-  </section>
-</section>
+         
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
 
-<section id="contato">
-  <h2>Contato</h2>
-  <p></p>
-</section>
+          
+          <div>
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required />
+          </div>
+          <div>
+            <label for="confirma_senha">Senha</label>
+            <input
+              type="password"
+              id="confirma_senha"
+              name="confirma_senha"
+              required
+            />
+          </div>
 
-</main>
+         
+         
+          <div>
+            <label for="cep">CEP</label>
+            <input type="text" id="cep" name="cep" required />
+          </div>
+           <div>
+            <label for="endereco">Endereço</label>
+            <input type="text" id="endereco" name="endereco" required />
+          </div>
 
-<footer class="footer">
+          
+          <div>
+            <label for="numero">Número</label>
+            <input type="text" id="numero" name="numero" />
+          </div>
+          <div>
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" name="cidade" required />
+          </div>
+          <div>
+            <label for="estado">Estado</label>
+            <input type="text" id="estado" name="estado" required />
+          </div>
+        
 
-</footer>
-</body>
+          
+          <div>
+            <button type="submit">Cadastro</button>
+          </div>
+        </form>
+  </div>
+  <div id="login">
+    <h2> Login</h2>
+    <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+    <div>
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required />
+          </div>
+  </div>
+  <a class="esqueciSenha" href="">Esqueci a senha</a>
+  <div>
+            <button type="submit">Login</button>
+          </div>
+  </body>
 </html>
+
