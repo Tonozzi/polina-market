@@ -1,0 +1,17 @@
+
+@media (max-width: 480px) {
+    header {
+        background-color:#0a69ab ;
+
+    }
+    .logo{
+        width: 100%;
+        text-align: center;
+    }
+    #logoHeader{
+        width: 50%;
+         display: inline-block;
+    }
+
+
+}
