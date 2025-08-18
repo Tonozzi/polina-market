@@ -30,15 +30,15 @@
       <nav>
         <ul>
           <li><a href="#sobre-nos">Sobre nós</a></li>
-          <li>
-            <a href="#servicos">Serviços</a>
+          <li class="dropdown">
+            <a href="#servicos">Serviços <img src="assets/arrow_drop_down_16dp_FFFFFF_FILL0_wght400_GRAD0_opsz20.svg"></a>
             <ul class="submenu">
               <li><a href="#">TeleEntrega</a></li>
               <li><a href="#">Retirada</a></li>
             </ul>
           </li>
-          <li>
-            <a href="#produtos">Produtos</a>
+          <li class="dropdown">
+            <a href="#produtos">Produtos <img src="assets/arrow_drop_down_16dp_FFFFFF_FILL0_wght400_GRAD0_opsz20.svg"></a>
             <ul class="submenu">
               <li>
                 <a href="./produtos-nao-pereciveis.html"
@@ -51,38 +51,42 @@
               <li><a href="./higiene.html">Higiene</a></li>
             </ul>
           </li>
-          <li><a href="./contato.html">contato</a></li>
+          <li><a href="./contato.html">Contato</a></li>
         </ul>
-        <ul>
-          <li><a href="#cadastro">Cadastro</a><img src="assets/cadastro.svg"></li>
-          <li><a href="#login">Login</a><img src="assets/login.svg"></li>
+        <ul class="containerCadastro">
+          <li class="filhoCadastro"><img src="assets/cadastro.svg"><a href="#cadastro">Cadastro</a></li>
+          <li class="filhoCadastro"><img src="assets/login.svg"><a href="#login">Login</a></li>
         </ul>
       </nav>
     </header>
     <main class="main">
-      <section class="carossel">
+      <section class="carosselContainer">
+        <div class="carrossel">
         <div class="slideAtivo">
-          <img src="slide1.jpg" alt="Bem Vindo ao site" />
+          <img src="assets/slide1.png" alt="Bem Vindo ao site" />
         </div>
         <div class="slide">
-          <img src="slide2.jpg" alt="Alimentos típicos" />
+          <img src="assets/slide2.png" alt="Alimentos típicos" />
         </div>
         <div class="slide">
-          <img src="slide3.jpg" alt="Serviços de entrega" />
+          <img src="assets/slide3.png" alt="Serviços de entrega" />
         </div>
-
+        </div>
+        <div class="dots">
+          <input type="radio" class="dotAtual">
+          <input type="radio" class="dot">
+          <input type="radio" class="dot">
+          <input type="radio" class="dot">
+        </div>
+        <div class="botoesCarossel">
         <button class="anterior">
           <img src="./assets/chevron_left.svg" alt="" />
         </button>
         <button class="proximo">
           <img src="./assets/chevron_right.svg" />
         </button>
-
-        <div class="dots">
-          <span class="dotAtual"></span>
-          <span class="dot"></span>
-          <span class="dot"></span>
-        </div>
+      </div>
+       
       </section>
       <section id="sobre-nos">
         <h2>Sobre nós</h2>
@@ -308,4 +312,7 @@
           </div>
   </body>
 </html>
+<script src="scripts/carossel.js">
+  
+</script>
 
