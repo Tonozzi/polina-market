@@ -1,0 +1,100 @@
+.page { display: flex; 
+  flex-direction: column;
+  grid-template-columns: 260px 1fr; 
+  gap: 24px;
+  padding: 16px; 
+height: 800px;}
+
+
+.sidebar { 
+  border: 1px solid #cbd5e1;
+   padding: 16px; 
+   border-radius: 6px; 
+   height: 100%;
+   background-color: #0a69ab;
+  }
+.sidebar h2 { 
+  margin: 0 0 12px;
+   font-size: 20px; 
+   color: #0a4a7a; }
+.cats { 
+  list-style: none; 
+  margin: 0; 
+  padding: 0; 
+}
+.containerMain{
+  display: flex;
+}
+.cats li {
+
+   margin: 8px 0; }
+.cats .cat {
+  width: 100%; 
+  text-align: left;
+   padding: 10px; 
+   border: 0; 
+   border-radius: 2px;
+  background: transparent;
+   cursor: pointer; 
+   font-size: 16px; 
+   color: #ffffff;
+   font-weight: 600;
+}
+.cats .cat.ativo { background: #f6c439; 
+  border-radius: 2px;
+  color: #0d2140; }
+
+
+.content { 
+  width: 100%;
+}
+.panel { display: none; 
+  border: 1px solid #cbd5e1; 
+  border-radius: 6px;
+   padding: 16px;
+   width: 70%;
+   height: 100%;
+   }
+.panel.ativo { 
+  display: block; 
+  width: 100%;
+  height: 100%;
+}
+.panel-title { 
+  text-align: center; 
+  margin: 0 0 16px; 
+  color: #f6c439;
+font-size: 1.5em; }
+
+.grid { 
+  display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); 
+   gap: 20px; }
+.card { 
+
+  background: #fff;
+   border: 1px solid #e5e7eb; 
+   border-radius: 8px; 
+   overflow: hidden; 
+   text-align: center; }
+.card img { 
+  width: 100%;
+   height: 160px; 
+   object-fit: cover; 
+   background: #eee; 
+  }
+.card .info {
+   padding: 8px; 
+  }
+.card .name { 
+  margin: 8px 0 6px;
+   color: #1e3a8a; 
+   font-weight: 600; 
+    }
+.card .price {
+   color: #1e3a8a; }
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .page { grid-template-columns: 1fr; }
+}

@@ -249,12 +249,14 @@ label a:hover span {
 }
 .containerLogoF{
   width:30%;
-  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 .containerLogoF img {
   width:100%;
   max-width: 300px;
   height:auto;
+  
 
 }
 .containerLeft{
