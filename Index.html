@@ -20,45 +20,9 @@
   </head>
 
   <body>
-    <header>
-      <div class="logo">
-        <img id="logoHeader"
-          src="assets/logo.png"
-          alt="Polina - Mercado de produtos do leste europeu"
-        />
-      </div>
-      <nav>
-        <ul>
-          <li><a href="#sobre-nos">Sobre nós</a></li>
-          <li class="dropdown">
-            <a href="#servicos">Serviços <img src="assets/arrow_drop_down_16dp_FFFFFF_FILL0_wght400_GRAD0_opsz20.svg"></a>
-            <ul class="submenu">
-              <li><a href="#">TeleEntrega</a></li>
-              <li><a href="#">Retirada</a></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#produtos">Produtos <img src="assets/arrow_drop_down_16dp_FFFFFF_FILL0_wght400_GRAD0_opsz20.svg"></a>
-            <ul class="submenu">
-              <li>
-                <a href="./produtos-nao-pereciveis.html"
-                  >Alimentos não perecíveis</a
-                >
-              </li>
-              <li><a href="./alimentos-tipicos.html">Alimentos típicos</a></li>
-              <li><a href="./verduras.html">Hortaliças</a></li>
-              <li><a href="./limpeza.html">Limpeza</a></li>
-              <li><a href="./higiene.html">Higiene</a></li>
-            </ul>
-          </li>
-          <li><a href="./contato.html">Contato</a></li>
-        </ul>
-        <ul class="containerCadastro">
-          <li class="filhoCadastro"><img src="assets/cadastro.svg"><a href="#cadastro">Cadastro</a></li>
-          <li class="filhoCadastro"><img src="assets/login.svg"><a href="#login">Login</a></li>
-        </ul>
-      </nav>
-    </header>
+    
+    <div id="header"></div>
+    
     <main class="main">
       <section class="carosselContainer">
         <div class="carrossel">
@@ -69,20 +33,26 @@
           <img src="assets/slide2.png" alt="Alimentos típicos" />
         </div>
         <div class="slide">
-          <img src="assets/slide3.png" alt="Serviços de entrega" />
+          <img src="assets/slide3.jpg" alt="Serviços de entrega" />
         </div>
         </div>
-        <div class="dots">
-          <input type="radio" class="dotAtual">
-          <input type="radio" class="dot">
-          <input type="radio" class="dot">
-          <input type="radio" class="dot">
-        </div>
+       <div class="dots">
+  <input type="radio" name="slide" id="dot1" checked>
+  <label for="dot1"></label>
+
+  <input type="radio" name="slide" id="dot2">
+  <label for="dot2"></label>
+
+  <input type="radio" name="slide" id="dot3">
+  <label for="dot3"></label>
+
+  
+</div>
         <div class="botoesCarossel">
-        <button class="anterior">
+        <button class="anterior" id="cBotao">
           <img src="./assets/chevron_left.svg" alt="" />
         </button>
-        <button class="proximo">
+        <button class="proximo"id="cBotao">
           <img src="./assets/chevron_right.svg" />
         </button>
       </div>
@@ -128,78 +98,103 @@
         </p>
 
         <section id="categoria">
-          <label>
-            <a href="">Alimentos não perecíveis</a>
-            <img
-              src="./assets/cleaningback.webp"
-              alt=""
-              class="imagensCategorias"
-            />
-          </label>
-        </section>
-        <section id="categoria">
-          <label>
-            <a href="">Alimentos típicos</a>
-            <img src="./assets/tipicos.jpg" alt="" class="imagensCategorias" />
-          </label>
-        </section>
-        <section id="categoria">
-          <label>
-            <a href="">Higiene pessoal</a>
-            <img
-              src="./assets/selfcareback.jpg"
-              alt=""
-              class="imagensCategorias"
-            />
-          </label>
-        </section>
-        <section id="categoria">
-          <label>
-            <a href="">Limpeza</a>
-            <img
-              src="./assets/pereciveisback.jpeg"
-              alt=""
-              class="imagensCategorias"
-            />
-          </label>
-        </section>
-        <section id="categoria">
-          <label>
-            <a href="">Frutas e legumes</a>
-            <img
-              src="./assets/verdurasback.jpg"
-              alt=""
-              class="imagensCategorias"
-            />
-          </label>
-        </section>
+  <label>
+    <a href="">
+      <span>Alimentos não perecíveis</span>
+      <img
+        src="./assets/cleaningback.webp"
+        alt=""
+        class="imagensCategorias"
+      />
+    </a>
+  </label>
+</section>
+
+<section id="categoria">
+  <label>
+    <a href="">
+      <span>Alimentos típicos</span>
+      <img
+        src="./assets/tipicos.jpg"
+        alt=""
+        class="imagensCategorias"
+      />
+    </a>
+  </label>
+</section>
+
+<section id="categoria">
+  <label>
+    <a href="">
+      <span>Higiene pessoal</span>
+      <img
+        src="./assets/selfcareback.jpg"
+        alt=""
+        class="imagensCategorias"
+      />
+    </a>
+  </label>
+</section>
+
+<section id="categoria">
+  <label>
+    <a href="">
+      <span>Limpeza</span>
+      <img
+        src="./assets/pereciveisback.jpeg"
+        alt=""
+        class="imagensCategorias"
+      />
+    </a>
+  </label>
+</section>
+
+<section id="categoria">
+  <label>
+    <a href="">
+      <span>Frutas e legumes</span>
+      <img
+        src="./assets/verdurasback.jpg"
+        alt=""
+        class="imagensCategorias"
+      />
+    </a>
+  </label>
+</section>
       </section>
 
       
     </main>
     <footer class="footer">
-      <div class="unidades">
-      <section class="footerListas">
-        <a href="contato.html">Moinhos</a>
-        <a href="contato.html">Gramado</a>
-      </section>
-      <div class="infoFooter">
-      <section class="footerListas">
-        <a href="#sobre-nos">Sobre Nós</a>
-        <a href="#servicos">Serviços</a>
-        <a href="#produtos">Produtos</a>
-        <a href="#cadastro">contato</a>
-      </section>
+      <div class="containerLeft">
+       <div class="unidades">
+        <h3 class="tituloLista">Unidades</h3>
+    <ul class="footerListas">
+      
+      <li><a href="contato.html">Moinhos</a></li>
+      <li><a href="contato.html">Gramado</a></li>
+    </ul>
+  </div>
+  <div class="infoFooter">
+    <ul class="footerListas">
+      <li><a href="#sobre-nos">Sobre Nós</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#produtos">Produtos</a></li>
+      <li><a href="#cadastro">Contato</a></li>
+    </ul>
+  </div>
+  </div>
+
       <div class="containerLogoF">
         <img src="assets/logo.png">
       </div>
       <section class="infosLaterais">
-        <div id="atendimentotel">
+        <div id="atendimentoTel">
           <h1>Central de atendimento:</h1> 
-          <a href="https://web.whatsapp.com/">(51) 99999-9999</a>
+          <a href="https://web.whatsapp.com/" >(51) 99999-9999</a>
         </div>
-        <div id="atendimentoinfo">
-          <p>Horário de atendimento: </br>
+        <div id="atendimentoInfo">
+          <p id="atendimentoP">Horário de atendimento: </br>
           De segunda à sexta, das 08h às 18h
           </p>
         </div>
@@ -310,9 +305,12 @@
   <div>
             <button type="submit">Login</button>
           </div>
-  </body>
-</html>
-<script src="scripts/carossel.js">
+          
   
-</script>
+
+  </body>
+  
+</html>
+<script src="scripts/carossel.js" defer></script>
+<script src="scripts/include.js" defer></script>
 

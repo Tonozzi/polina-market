@@ -1,8 +1,11 @@
 
+
 body{
     font-family: "Nata Sans";
+    background-image: url(../assets/back1.png);
+    
+    
 }
-@media (max-width: 1000px) {
     header {
         background-color:#0a69ab ;
         color:white
@@ -14,7 +17,7 @@ body{
         text-align: center;
     }
     #logoHeader{
-        width: 50%;
+        max-width: 300px;
          display: inline-block;
     }
 nav ul {
@@ -22,12 +25,14 @@ nav ul {
   padding: 0;
   margin: 0;
 }
-
+.headerLista li:hover{
+  background-color: #f6c439;
+}
 nav ul li {
   position: relative; 
 }
 
-/* links do menu */
+
 nav ul li a {
   color: white;
   text-decoration: none;
@@ -35,17 +40,18 @@ nav ul li a {
   padding: 8px;
 }
 
-/* submenu escondido por padrão */
+
 .submenu {
   display: none; 
   left: 0;              
   top: 100%;            
-  background-color: #5cb7f8; 
+  background-color: #f6c438a1; 
   padding: 0;
   list-style: none;
   margin: 0;
   z-index: 10;
   min-width: 200px;     
+  position: absolute;
 }
 
 /* itens do submenu */
@@ -82,35 +88,327 @@ ul li img {
   display: flex;
 
 }
-.filhoCadastro{
+#cadastroNav {
   display: flex;
   align-items: center;
 }
+.carrossel {
+  border-bottom: 5px solid #b53323;
+  border-top: 5px solid #b53323;
+}
+
+.carrossel > div {
+  display: none;
+}
 
 
-.carosselContainer {
-  width:95%;
+.carrossel > .slideAtivo,
+.carrossel > .ativo {
+  display: block;
+}
+.carosselContainer{
+  background-color: #393b3d75;
+padding-bottom: 10px;
+}
+
+.carrossel > div img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px; 
+  margin:  15px;
+}
+
+.dots input[type="radio"] {
+  display: none;
+}
+
+
+.dots input[type="radio"] + label::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #0a69ab21;
+  border-radius: 50%;
+  background-color: #0a69ab21;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+.dots input[type="radio"]:checked + label::before {
+  background-color: #0a69ab;
+  box-shadow: 0 0 5px rgba(10, 105, 171, 0.5);
+}
+.botoesCarossel{
+  display: flex;
+  justify-content: center;
+}
+#cBotao{
+  border-radius: 100%;
+  display: flex;
+  height: 30px;
+  width: 30px;
+  border-color: #0a69ab;
+  background-color: #ffffff00;
+}
+#cBotao img{
+align-items: center;
+}
+
+h2{
+  color: #0a69ab;
+  text-align: center;
+  font-size: 40px;
   
+}
+p{
+  color: gray;
+  font-size: 20px;
+  text-align: center;
+}
+.categoria{
+  display: flex;
+  width: 95%;
 
 }
-.carossel{
-  display: flex;     
-  width: 100%;
+#produtos {
+  text-align: center;
+  font-family: "Nata Sans"
+}
+
+#produtos h2 {
+  margin-bottom: 10px;
+}
+
+#produtos p {
+  margin-bottom: 20px;
+  color: #555;
+}
+
+
+#produtos #categoria {
+  display: inline-block;
+  margin: 10px;
+  text-align: center;
+}
+.imagensCategorias {
+  width: 120px;
+  height: 120px;
+  padding: 10px;
+  border: 3px solid #004aad; 
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  object-fit: cover;
+  margin: 10px  ;
+  
+}
+label a {
+display: flex;
+flex-direction: column-reverse;
+align-items: center;
+text-decoration: none;
+
+
+}
+
+a span {
+  font-family: "Nata Sans";
+  color: #004aad;
+  font-size: large;
+}
+
+a:link,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+label a:hover .imagensCategorias {
+  border: 3px solid #f6c439;
+  background-color: #004aad;
+    width: 140px;
+  height: 140px;
+}
+
+label a:hover span {
+  color: #f6c439;
+  font-size: larger;
+}
+
+.footer{
+  display: flex;
+  background-color: #f6c439;
+  justify-content: space-between;
   align-items: center;
 }
-.slide img {
-  width: 100%;
-  height: auto;   
-  display: block;     
+.containerLogoF{
+  width:30%;
+  align-items: center;
 }
-.slideAtivo img {
-  width: 100%;
-  height: auto;   
-  display: block;     
-}
-.dots{
-  display: flex;
-  
-}
+.containerLogoF img {
+  width:100%;
+  max-width: 300px;
+  height:auto;
 
 }
+.containerLeft{
+  display: flex;
+  height: 100%;
+  justify-content: space-around;
+}
+.unidades{
+  align-items: center;
+  text-align: center;
+  
+  height: 100%;
+}
+.infosLaterais{
+  display: flex;
+  flex-direction: column;
+}
+.footerListas {
+  list-style:  none;
+  text-align: center;
+  color: white;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 0;
+}
+.footerListas li a:hover{
+  color:#004aad;
+  font-weight: 700;
+
+}
+#atendimentoInfo{
+  display: flex;
+}
+.footerListas h3{
+  font-size: 1.5em;
+      position: relative;
+    bottom: 14px;
+}
+#atendimentoTel{
+  display: flex;
+  flex-direction: column;
+}
+.footerListas li{
+  margin-bottom: 10px;
+  width: 100%;
+}
+#atendimentoTel h1 {
+  color: white;
+}
+#atendimentoP{
+color:#004aad;
+text-align: justify;
+}
+.tituloLista {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: white;
+}
+.footer > * {
+  margin: 2%;
+  padding: 0;
+  width: 33%;
+}
+.infosLaterais a{
+  color:white;
+}
+.infosLaterais a:hover{
+  color:#004aad;
+  font-weight: 700
+
+}
+#sobre-nos{
+  background-color: #b53323;
+  padding:20px;
+  margin-top:10px;
+
+}
+#sobre-nos h2,p{
+  color: white;
+}
+
+#servicos{
+  background-color: white;
+  margin-top:10px;
+  padding:20px
+
+}
+#servicos h2{
+  margin:0px;
+  color:#0a69ab;
+  
+}
+#servicos p{
+  margin-top: 2px;
+  color:#0a69ab
+
+}
+.grid-servicos{
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  align-items: center
+
+}
+.servico > h3, .servico p{
+  color:#0a6bad;
+  margin: 0px
+}
+.servico img {
+width: 50px;
+height: auto;
+
+
+}
+
+.servico  p{ 
+  margin-bottom: 10px
+}
+.servico{
+display: flex;
+align-items: center;
+flex-direction: column;
+}
+
+@media (min-width: 1200px){
+.carrossel{
+  max-width: 100%;
+  justify-content: center;
+  display: flex;
+
+}
+.carosselContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+
+}
+.ativo{
+  max-width: 1000px;
+  border: 5px solid #b53323;
+
+}
+nav ul{
+  display: flex;
+  justify-content: space-evenly;
+}
+#cadastroNav{
+  display: flex;
+  align-items: center;
+}
+}
+
+
+
+
