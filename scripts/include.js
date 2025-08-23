@@ -1,15 +1,18 @@
+
 document.addEventListener("DOMContentLoaded", () => {
-  
-  fetch("../partials/header.html")
-    .then(res => res.text())
-    .then(html => {
-      document.querySelector("#header").innerHTML = html;
-    });
+  const repoRoot = new URL('..', document.currentScript.src); 
+
+  const headerURL = new URL('partials/header.html', repoRoot);
+  const footerURL = new URL('partials/footer.html', repoRoot);
 
 
-  fetch("../partials/header.html")
-    .then(res => res.text())
-    .then(html => {
-      document.querySelector("#footer").innerHTML = html;
-    });
+  fetch(headerURL).then(r => r.text()).then(html => {
+    const slot = document.querySelector('#header');
+    if (slot) slot.innerHTML = html;
+  });
+
+  fetch(footerURL).then(r => r.text()).then(html => {
+    const slot = document.querySelector('#footer');
+    if (slot) slot.innerHTML = html;
+  });
 });
