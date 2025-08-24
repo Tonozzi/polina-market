@@ -44,7 +44,11 @@ height: 800px;}
   border-radius: 2px;
   color: #0d2140; }
 
-
+.cat:hover{
+  color:#f6c439;
+  border:#f6c439 solid 3px;
+  
+}
 .content { 
   width: 100%;
 }
@@ -94,7 +98,7 @@ font-size: 1.5em; }
 .card .price {
    color: #1e3a8a; }
 
-/* Responsivo */
+
 @media (max-width: 900px) {
   .page { grid-template-columns: 1fr; }
 }
