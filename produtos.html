@@ -229,23 +229,7 @@
 <div id="footer"></div>
 </body>
 <script src="scripts/include.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-  const buttons = document.querySelectorAll('.cat');
-  const panels  = document.querySelectorAll('.panel');
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      
-      buttons.forEach(b => b.classList.remove('ativo'));
-      btn.classList.add('ativo');
-
-      
-      const id = btn.dataset.target;
-      panels.forEach(p => p.classList.toggle('ativo', p.id === id));
-    });
-  });
-});
+<script src="scripts/marketplace.js">
 
 </script>
 </html>
