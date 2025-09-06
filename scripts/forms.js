@@ -1,5 +1,7 @@
+// tudo aqui roda depois que o html e as libs carregarem, pq o script tá no fim do body
+
 document.addEventListener("DOMContentLoaded", () => {
-  // pega tudo que vamos mexer
+  // pega os elementos do form
   const form = document.querySelector("#cadastro form");
 
   const nome  = document.getElementById("nome");
@@ -33,18 +35,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const telNat = document.getElementById("tel_nacional");
   const telE164= document.getElementById("tel_e164");
 
-  // inicia o dropdown de ddi com bandeiras
-  // obs: deixo sem país inicial pra obrigar escolher o ddi antes de digitar
+  // segurança: garante que a lib do telefone existe
+  if (!window.intlTelInput) {
+    console.error("intl-tel-input não carregou. confere as <script> no html.");
+    eTel.textContent = "falhou carregar o seletor de ddi";
+    tel.classList.add("input-erro");
+    return;
+  }
+
+  // inicia o dropdown de ddi. deixo sem país inicial pra obrigar a escolher antes de digitar
   const iti = window.intlTelInput(tel, {
     initialCountry: "",
     separateDialCode: true,
-    nationalMode: false, // a gente quer montar o e164 bonitinho depois
+    nationalMode: false,
     autoPlaceholder: "off",
     formatOnDisplay: true,
     utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.8/build/js/utils.js"
   });
 
-  // bloqueia digitação até escolher o ddi
+  // trava digitar até escolher o ddi
   let ddiEscolhido = false;
   tel.addEventListener("keydown", (ev) => {
     if (!ddiEscolhido) {
@@ -53,26 +62,27 @@ document.addEventListener("DOMContentLoaded", () => {
       tel.classList.add("input-erro");
     }
   });
+  tel.addEventListener("paste", (ev) => {
+    if (!ddiEscolhido) ev.preventDefault(); // sem colar antes do ddi
+  });
 
+  // quando escolher o país, libera digitação e salva o ddi no hidden
   tel.addEventListener("countrychange", () => {
-    // quando escolher o ddi, aí libera digitar
     ddiEscolhido = true;
     tel.classList.remove("input-erro");
     eTel.textContent = "";
-    // zera o campo pra evitar sujeira
     tel.value = "";
-    // salva o ddi no hidden
     const data = iti.getSelectedCountryData();
     telDDI.value = data?.dialCode ? "+" + data.dialCode : "";
   });
 
-  // formatações simples enquanto digita
+  // valida enquanto digita
   nome.addEventListener("input", () => {
     nome.value = nome.value.replace(/\s{2,}/g, " ");
     validaNome();
   });
 
-  // cpf: deixa só número e coloca máscara 000.000.000-00
+  // cpf: formata 000.000.000-00 e valida
   cpf.addEventListener("input", () => {
     const nums = cpf.value.replace(/\D/g, "").slice(0, 11);
     let m = nums;
@@ -83,16 +93,12 @@ document.addEventListener("DOMContentLoaded", () => {
     validaCPF();
   });
 
-  // telefone valida "on the fly"
-  tel.addEventListener("input", () => {
-    validaTelefone();
-  });
-
+  tel.addEventListener("input", () => validaTelefone());
   email.addEventListener("input", () => validaEmail());
   senha.addEventListener("input", () => validaSenha());
   s2.addEventListener("input", () => validaConfirmacao());
 
-  // cep: só número e máscara 00000-000
+  // cep: mascara 00000-000
   cep.addEventListener("input", () => {
     const nums = cep.value.replace(/\D/g, "").slice(0, 8);
     cep.value = nums.length > 5 ? nums.replace(/(\d{5})(\d{0,3})/, "$1-$2") : nums;
@@ -100,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
     cep.classList.remove("input-erro");
   });
 
-  // botão ok do cep: chama viacep e preenche os campos, e libera o número
+  // botão ok do cep: consulta viacep
   btnCep.addEventListener("click", async () => {
     const puro = cep.value.replace(/\D/g, "");
     if (puro.length !== 8) {
@@ -113,20 +119,14 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const resp = await fetch(`https://viacep.com.br/ws/${puro}/json/`);
       const data = await resp.json();
-      if (data.erro) {
-        throw new Error("cep não encontrado");
-      }
+      if (data.erro) throw new Error("cep não encontrado");
       endereco.value = (data.logradouro || "").trim();
       cidade.value   = (data.localidade || "").trim();
       estado.value   = (data.uf || "").trim();
-
-      // libera o número pra digitar agora
       numero.disabled = false;
-      numero.focus();
-
-      // limpa erros visuais
       eCEP.textContent = "";
       [endereco, cidade, estado].forEach(i => i.classList.remove("input-erro"));
+      numero.focus();
     } catch (err) {
       eCEP.textContent = "não rolou achar esse cep :/";
       [endereco, cidade, estado].forEach(i => { i.value = ""; i.classList.add("input-erro"); });
@@ -135,14 +135,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // validações (bem objetivas)
+  // helpers de validação (bem diretos)
   function marcaErro(el, span, msg) {
     span.textContent = msg || "";
     if (msg) el.classList.add("input-erro"); else el.classList.remove("input-erro");
   }
 
   function validaNome() {
-    // tem que ter ao menos 3 letras (desconsidera número e pontuação)
     const letras = (nome.value.match(/[a-záàâãéèêíïóôõöúçñ]/gi) || []).length;
     if (letras < 3) { marcaErro(nome, eNome, "coloca pelo menos 3 letras"); return false; }
     marcaErro(nome, eNome, "");
@@ -153,7 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const nums = cpf.value.replace(/\D/g, "");
     if (nums.length !== 11) { marcaErro(cpf, eCPF, "cpf tem 11 dígitos"); return false; }
     if (/(^(\d)\1{10}$)/.test(nums)) { marcaErro(cpf, eCPF, "cpf inválido"); return false; }
-    // cálculo dos dígitos (o clássico)
     const dig = (base) => {
       let soma = 0;
       for (let i = 0; i < base.length; i++) soma += parseInt(base[i], 10) * (base.length + 1 - i);
@@ -179,7 +177,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!ddiEscolhido) { marcaErro(tel, eTel, "escolhe o ddi no dropdown"); return false; }
     const raw = tel.value.replace(/\D/g, "");
     if (raw.length < 6) { marcaErro(tel, eTel, "número muito curto"); return false; }
-    // guarda nos hiddens (nacional e e164)
     const data = iti.getSelectedCountryData();
     const ddi = data?.dialCode ? "+" + data.dialCode : "";
     telDDI.value  = ddi;
@@ -198,36 +195,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function validaSenha() {
     const v = senha.value;
-    // regra padrão: 8+ chars, pelo menos 1 letra e 1 número
     const ok = /[A-Za-z]/.test(v) && /\d/.test(v) && v.length >= 8;
     if (!ok) { marcaErro(senha, eSenha, "mín 8, com letras e números"); return false; }
     marcaErro(senha, eSenha, "");
-    // se a confirmação já tem algo, revalida também
     if (s2.value) validaConfirmacao();
     return true;
   }
 
   function validaConfirmacao() {
-    if (s2.value !== senha.value || !s2.value) {
-      marcaErro(s2, eS2, "as senhas não batem");
-      return false;
-    }
+    if (s2.value !== senha.value || !s2.value) { marcaErro(s2, eS2, "as senhas não batem"); return false; }
     marcaErro(s2, eS2, "");
     return true;
   }
 
   function validaCEPPreenchido() {
-    // após clicar ok, esses 3 precisam estar preenchidos
     let ok = true;
     if (!endereco.value.trim()) { marcaErro(endereco, eEnd, "preenche pelo cep"); ok = false; } else marcaErro(endereco, eEnd, "");
     if (!cidade.value.trim())   { marcaErro(cidade,   eCid, "preenche pelo cep"); ok = false; } else marcaErro(cidade,   eCid, "");
     if (!estado.value.trim())   { marcaErro(estado,   eUF,  "preenche pelo cep"); ok = false; } else marcaErro(estado,   eUF,  "");
-    // número também obrigatório depois que liberar
     if (numero.disabled || !numero.value.trim()) { marcaErro(numero, eNum, "informa o número"); ok = false; } else marcaErro(numero, eNum, "");
     return ok;
   }
 
-  // valida tudo no submit e mostra todos os erros juntos
+  // valida tudo no submit e mostra tudo de uma vez
   form.addEventListener("submit", (ev) => {
     ev.preventDefault();
 
@@ -243,11 +233,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const tudoOk = okNome && okCPF && okGen && okTel && okEmail && okSenha && okS2 && okCEP;
 
     if (tudoOk) {
-      // aqui tu faria o submit real, ajax, fetch, etc.
       alert("form válido! (aqui você enviaria pro backend)");
       // form.submit(); // se quiser mandar de verdade
     } else {
-      // scroll suave pro primeiro erro
       const primeiroErro = form.querySelector(".input-erro") || form.querySelector(".erro:not(:empty)");
       if (primeiroErro) {
         primeiroErro.scrollIntoView({ behavior: "smooth", block: "center" });
