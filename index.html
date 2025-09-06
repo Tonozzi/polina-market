@@ -18,10 +18,9 @@
     <link rel="icon" href="assets/logomain.png" />
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="styles/modal.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.8/build/css/intlTelInput.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.8/build/css/intlTelInput.css">
-<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.8/build/js/intlTelInput.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.8/build/js/utils.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.5/build/css/intlTelInput.css">
+
   </head>
 
   <body>
@@ -241,120 +240,123 @@
 
       </div>
     </footer>
-  <div id="cadastro">
-  <h2>Cadastro</h2>
-   <form action="#" method="post" novalidate>
+ <div id="cadastro">
+    <h2>Cadastro</h2>
 
-    <div>
-      <label for="nome">Nome</label>
-      <input type="text" id="nome" name="nome" autocomplete="name" />
-      <span class="erro" id="erro-nome"></span>
-    </div>
-
-    <div>
-      <label for="cpf">CPF</label>
-      <input type="text" id="cpf" name="cpf" inputmode="numeric" maxlength="14" autocomplete="off" aria-describedby="erro-cpf" />
-      <span class="erro" id="erro-cpf"></span>
-    </div>
-
-    <div>
-      <label>Gênero</label>
-      <label><input type="radio" name="genero" value="feminino" /> Feminino</label>
-      <label><input type="radio" name="genero" value="masculino" /> Masculino</label>
-      <label><input type="radio" name="genero" value="nao-informar" /> Prefiro não dizer</label>
-      <span class="erro" id="erro-genero"></span>
-    </div>
-
-    <div>
-      <label for="telefone">Telefone</label>
-      <input type="tel" id="telefone" name="telefone" autocomplete="tel" />
-      <!-- hiddens pra salvar infos úteis do telefone -->
-      <input type="hidden" id="tel_ddi" name="tel_ddi">
-      <input type="hidden" id="tel_nacional" name="tel_nacional">
-      <input type="hidden" id="tel_e164" name="tel_e164">
-      <span class="erro" id="erro-telefone"></span>
-    </div>
-
-    <div>
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" autocomplete="email" />
-      <span class="erro" id="erro-email"></span>
-    </div>
-
-    <div>
-      <label for="senha">Senha</label>
-      <input type="password" id="senha" name="senha" autocomplete="new-password" />
-      <span class="erro" id="erro-senha"></span>
-    </div>
-
-    <div>
-      <label for="confirma_senha">Confirmar Senha</label>
-      <input type="password" id="confirma_senha" name="confirma_senha" autocomplete="new-password" />
-      <span class="erro" id="erro-confirma-senha"></span>
-    </div>
-
-    <div class="linha">
+    <form action="#" method="post" novalidate>
       <div>
-        <label for="cep">CEP</label>
-        <input type="text" id="cep" name="cep" inputmode="numeric" maxlength="9" />
-        <span class="erro" id="erro-cep"></span>
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" autocomplete="name" />
+        <span class="erro" id="erro-nome"></span>
       </div>
-      <div style="flex:0 0 auto">
-        <button type="button" id="btn-cep">OK</button>
+
+      <div>
+        <label for="cpf">CPF</label>
+        <input type="text" id="cpf" name="cpf" inputmode="numeric" maxlength="14" autocomplete="off" aria-describedby="erro-cpf" />
+        <span class="erro" id="erro-cpf"></span>
       </div>
-    </div>
 
-    <div>
-      <label for="endereco">Endereço</label>
-      <input type="text" id="endereco" name="endereco" readonly />
-      <span class="erro" id="erro-endereco"></span>
-    </div>
+      <div>
+        <label>Gênero</label>
+        <label><input type="radio" name="genero" value="feminino" /> Feminino</label>
+        <label><input type="radio" name="genero" value="masculino" /> Masculino</label>
+        <label><input type="radio" name="genero" value="nao-informar" /> Prefiro não dizer</label>
+        <span class="erro" id="erro-genero"></span>
+      </div>
 
-    <div>
-      <label for="numero">Número</label>
-      <input type="text" id="numero" name="numero" disabled />
-      <span class="erro" id="erro-numero"></span>
-    </div>
+      <div>
+        <label for="telefone">Telefone</label>
+        <input type="tel" id="telefone" name="telefone" autocomplete="tel" />
+        <input type="hidden" id="tel_ddi" name="tel_ddi">
+        <input type="hidden" id="tel_nacional" name="tel_nacional">
+        <input type="hidden" id="tel_e164" name="tel_e164">
+        <span class="erro" id="erro-telefone"></span>
+      </div>
 
-    <div>
-      <label for="cidade">Cidade</label>
-      <input type="text" id="cidade" name="cidade" readonly />
-      <span class="erro" id="erro-cidade"></span>
-    </div>
+      <div>
+        <label for="emailCadastro">Email</label>
+        <input type="email" id="emailCadastro" name="email" autocomplete="email" />
+        <span class="erro" id="erro-email"></span>
+      </div>
 
-    <div>
-      <label for="estado">Estado</label>
-      <input type="text" id="estado" name="estado" readonly />
-      <span class="erro" id="erro-estado"></span>
-    </div>
+      <div>
+        <label for="senhaCadastro">Senha</label>
+        <input type="password" id="senhaCadastro" name="senha" autocomplete="new-password" />
+        <span class="erro" id="erro-senha"></span>
+      </div>
 
-    <div>
-      <button type="submit" id="btn-cadastro">Cadastro</button>
-    </div>
-  </form>
-</div>
+      <div>
+        <label for="confirma_senha">Confirmar Senha</label>
+        <input type="password" id="confirma_senha" name="confirma_senha" autocomplete="new-password" />
+        <span class="erro" id="erro-confirma-senha"></span>
+      </div>
+
+      <div class="linha">
+        <div>
+          <label for="cep">CEP</label>
+          <input type="text" id="cep" name="cep" inputmode="numeric" maxlength="9" />
+          <span class="erro" id="erro-cep"></span>
+        </div>
+        <div style="flex:0 0 auto">
+          <button type="button" id="btn-cep">Confirmar
+            
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label for="endereco">Endereço</label>
+        <input type="text" id="endereco" name="endereco" readonly />
+        <span class="erro" id="erro-endereco"></span>
+      </div>
+
+      <div>
+        <label for="numero">Número</label>
+        <input type="text" id="numero" name="numero"  />
+        <span class="erro" id="erro-numero"></span>
+      </div>
+
+      <div>
+        <label for="cidade">Cidade</label>
+        <input type="text" id="cidade" name="cidade" readonly />
+        <span class="erro" id="erro-cidade"></span>
+      </div>
+
+      <div>
+        <label for="estado">Estado</label>
+        <input type="text" id="estado" name="estado" readonly />
+        <span class="erro" id="erro-estado"></span>
+      </div>
+
+      <div>
+        <button type="submit" id="btn-cadastro">Cadastro</button>
+      </div>
+    </form>
+  </div>
 
   <div id="login">
-    <h2> Login</h2>
+    <h2>Login</h2>
     <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required />
-          </div>
+      <label for="emailLogin">Email</label>
+      <input type="email" id="emailLogin" name="emailLogin" required />
+    </div>
     <div>
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha" required />
-          </div>
+      <label for="senhaLogin">Senha</label>
+      <input type="password" id="senhaLogin" name="senhaLogin" required />
+    </div>
+    <a class="esqueciSenha" href="">Esqueceu a senha?</a>
+    <div>
+      <button type="button">Login</button>
+    </div>
   </div>
-  <a class="esqueciSenha" href="">Esqueceu a senha?</a>
-  <div>
-            <button type="submit">Login</button>
-          </div>
-          
   
 <script src="scripts/carossel.js" defer></script>
 <script src="scripts/include.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.8/build/js/intlTelInput.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.8/build/js/utils.js"></script>
+<script src="
+https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.5/build/js/intlTelInput.min.js
+"></script>
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.5/build/js/intlTelInput.min.js"></script>
+
 <script src="scripts/forms.js"></script>
 
   </body>

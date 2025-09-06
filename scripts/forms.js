@@ -1,244 +1,388 @@
-// tudo aqui roda depois que o html e as libs carregarem, pq o script tá no fim do body
+console.log("teste" );
 
 document.addEventListener("DOMContentLoaded", () => {
-  // pega os elementos do form
   const form = document.querySelector("#cadastro form");
+  if (!form) return;
 
-  const nome  = document.getElementById("nome");
-  const cpf   = document.getElementById("cpf");
-  const tel   = document.getElementById("telefone");
-  const email = document.getElementById("email");
-  const senha = document.getElementById("senha");
-  const s2    = document.getElementById("confirma_senha");
+  // pega campos
+  const nome   = form.querySelector("#nome");
+  const cpf    = form.querySelector("#cpf");
+  const tel    = form.querySelector("#telefone");
+  const email  = form.querySelector("#emailCadastro");
+  const senha  = form.querySelector("#senhaCadastro");
+  const s2     = form.querySelector("#confirma_senha");
 
-  const cep       = document.getElementById("cep");
-  const btnCep    = document.getElementById("btn-cep");
-  const endereco  = document.getElementById("endereco");
-  const numero    = document.getElementById("numero");
-  const cidade    = document.getElementById("cidade");
-  const estado    = document.getElementById("estado");
+  const generoRadios = form.querySelectorAll('input[name="genero"]');
 
-  const eNome  = document.getElementById("erro-nome");
-  const eCPF   = document.getElementById("erro-cpf");
-  const eGen   = document.getElementById("erro-genero");
-  const eTel   = document.getElementById("erro-telefone");
-  const eEmail = document.getElementById("erro-email");
-  const eSenha = document.getElementById("erro-senha");
-  const eS2    = document.getElementById("erro-confirma-senha");
-  const eCEP   = document.getElementById("erro-cep");
-  const eEnd   = document.getElementById("erro-endereco");
-  const eNum   = document.getElementById("erro-numero");
-  const eCid   = document.getElementById("erro-cidade");
-  const eUF    = document.getElementById("erro-estado");
+  const cep      = form.querySelector("#cep");
+  const btnCep   = form.querySelector("#btn-cep");
+  const endereco = form.querySelector("#endereco");
+  const numero   = form.querySelector("#numero");
+  const cidade   = form.querySelector("#cidade");
+  const estado   = form.querySelector("#estado");
 
-  const telDDI = document.getElementById("tel_ddi");
-  const telNat = document.getElementById("tel_nacional");
-  const telE164= document.getElementById("tel_e164");
+  // spans de erro
+  const eNome   = form.querySelector("#erro-nome");
+  const eCPF    = form.querySelector("#erro-cpf");
+  const eTel    = form.querySelector("#erro-telefone");
+  const eEmail  = form.querySelector("#erro-email");
+  const eSenha  = form.querySelector("#erro-senha");
+  const eS2     = form.querySelector("#erro-confirma-senha");
+  const eGen    = form.querySelector("#erro-genero");
+  const eCEP    = form.querySelector("#erro-cep");
+  const eEnd    = form.querySelector("#erro-endereco");
+  const eNum    = form.querySelector("#erro-numero");
+  const eCid    = form.querySelector("#erro-cidade");
+  const eUF     = form.querySelector("#erro-estado");
 
-  // segurança: garante que a lib do telefone existe
-  if (!window.intlTelInput) {
-    console.error("intl-tel-input não carregou. confere as <script> no html.");
-    eTel.textContent = "falhou carregar o seletor de ddi";
-    tel.classList.add("input-erro");
-    return;
+  // campos ocultos do telefone (se existirem)
+  const telDDI  = form.querySelector("#tel_ddi");
+  const telNat  = form.querySelector("#tel_nacional");
+  const telE164 = form.querySelector("#tel_e164");
+
+  // helpers
+  const setErr = (el, span, msg) => {
+    if (el) el.classList.toggle("input-erro", !!msg);
+    if (span) span.textContent = msg || "";
+    return !msg;
+  };
+  const clearErr = (el, span) => setErr(el, span, "");
+
+  const soDigitos = (v) => (v || "").replace(/\D/g, "");
+
+  // ============== BLOQUEIO DE ENDEREÇO ATÉ CONFIRMAR CEP ==============
+  let cepOk = false; // só fica true após ViaCEP OK
+
+  const lockAddress = (lock) => {
+    [endereco, numero, cidade, estado].forEach((el) => {
+      if (!el) return;
+      el.readOnly = !!lock;
+      el.classList.toggle("bloqueado", !!lock);
+      if (lock) {
+        // limpa mensagens de erro de endereço enquanto bloqueado
+        if (el === endereco) clearErr(endereco, eEnd);
+        if (el === numero)   clearErr(numero,   eNum);
+        if (el === cidade)   clearErr(cidade,   eCid);
+        if (el === estado)   clearErr(estado,   eUF);
+      }
+    });
+  };
+
+  // inicia bloqueado
+  lockAddress(true);
+
+  // validações
+  const validaNome = () => {
+    const v = (nome?.value || "").trim();
+    if (!v) return setErr(nome, eNome, "Informe seu nome.");
+    if (v.length < 2) return setErr(nome, eNome, "Nome muito curto.");
+    return setErr(nome, eNome, "");
+  };
+
+  const cpfValido = (str) => {
+    const v = soDigitos(str);
+    if (v.length !== 11 || /^(\d)\1{10}$/.test(v)) return false;
+    const calc = (base) => {
+      let soma = 0;
+      for (let i = 0; i < base; i++) soma += parseInt(v[i]) * (base + 1 - i);
+      let d = 11 - (soma % 11);
+      return d >= 10 ? 0 : d;
+    };
+    const d1 = calc(9);
+    const d2 = calc(10);
+    return d1 === parseInt(v[9]) && d2 === parseInt(v[10]);
+  };
+
+  const formataCPF = (str) => {
+    const v = soDigitos(str).slice(0, 11);
+    return v
+      .replace(/^(\d{3})(\d)/, "$1.$2")
+      .replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3")
+      .replace(/\.(\d{3})(\d)/, ".$1-$2");
+  };
+
+  const validaCPF = () => {
+    if (!cpf) return true;
+    const raw = cpf.value;
+    if (!raw) return setErr(cpf, eCPF, "Informe o CPF.");
+    if (!cpfValido(raw)) return setErr(cpf, eCPF, "CPF inválido.");
+    return setErr(cpf, eCPF, "");
+  };
+
+  const validaGenero = () => {
+    const marcado = Array.from(generoRadios).some((r) => r.checked);
+    return setErr(null, eGen, marcado ? "" : "Selecione uma opção.");
+  };
+
+  // =========================
+  // Telefone com intl-tel-input (somente dígitos, formatação/validação por país)
+  // =========================
+  let iti = null;
+  if (tel && window.intlTelInput) {
+    try {
+      iti = window.intlTelInput(tel, {
+        initialCountry: "br",
+        separateDialCode: true,        // input contém só ddd+número
+        nationalMode: true,
+        autoPlaceholder: "aggressive",
+        preferredCountries: ["br","us","pt","ar"],
+        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.8/build/js/utils.js"
+      });
+    } catch (err) {
+      console.error("Falha ao iniciar intl-tel-input:", err);
+    }
   }
 
-  // inicia o dropdown de ddi. deixo sem país inicial pra obrigar a escolher antes de digitar
-  const iti = window.intlTelInput(tel, {
-    initialCountry: "",
-    separateDialCode: true,
-    nationalMode: false,
-    autoPlaceholder: "off",
-    formatOnDisplay: true,
-    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.8/build/js/utils.js"
-  });
+  const onlyDigitKey = (ev) => {
+    const allowed = ["Backspace","Delete","ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End","Tab","Escape","Enter"];
+    const combo = ev.ctrlKey || ev.metaKey;
+    if (allowed.includes(ev.key) || combo) return;
+    if (!/^\d$/.test(ev.key)) ev.preventDefault();
+  };
 
-  // trava digitar até escolher o ddi
-  let ddiEscolhido = false;
-  tel.addEventListener("keydown", (ev) => {
-    if (!ddiEscolhido) {
-      ev.preventDefault();
-      eTel.textContent = "escolhe o ddi no dropdown primeiro :)";
-      tel.classList.add("input-erro");
+  const sanitizePaste = (ev) => {
+    ev.preventDefault();
+    const txt = (ev.clipboardData || window.clipboardData).getData("text") || "";
+    const digits = txt.replace(/\D/g, "");
+    const start = tel.selectionStart ?? tel.value.length;
+    const end   = tel.selectionEnd   ?? tel.value.length;
+    const before = tel.value.slice(0, start).replace(/\D/g, "");
+    const after  = tel.value.slice(end).replace(/\D/g, "");
+    tel.value = before + digits + after;
+    formatNational();
+  };
+
+  const atualizaHiddenTelefone = () => {
+    if (!tel) return;
+    const numero = tel.value || "";
+    if (telNat) telNat.value = numero;
+    if (iti) {
+      const data = iti.getSelectedCountryData?.() || {};
+      if (telDDI) telDDI.value = data.dialCode || "";
+      if (telE164) {
+        telE164.value = (window.intlTelInputUtils && iti.getNumber)
+          ? iti.getNumber(window.intlTelInputUtils.numberFormat.E164)
+          : "";
+      }
+    } else {
+      if (telDDI) telDDI.value = "";
+      if (telE164) telE164.value = "";
     }
-  });
-  tel.addEventListener("paste", (ev) => {
-    if (!ddiEscolhido) ev.preventDefault(); // sem colar antes do ddi
-  });
+  };
 
-  // quando escolher o país, libera digitação e salva o ddi no hidden
-  tel.addEventListener("countrychange", () => {
-    ddiEscolhido = true;
-    tel.classList.remove("input-erro");
-    eTel.textContent = "";
-    tel.value = "";
-    const data = iti.getSelectedCountryData();
-    telDDI.value = data?.dialCode ? "+" + data.dialCode : "";
-  });
+  const formatNational = () => {
+    if (!iti) return;
+    const nationalDigits = (tel.value || "").replace(/\D/g, "");
+    if (!nationalDigits) { tel.value = ""; return; }
+    const data = iti.getSelectedCountryData?.() || {};
+    const dial = data.dialCode || "";
+    if (window.intlTelInputUtils && typeof window.intlTelInputUtils.formatNumber === "function") {
+      const rawPlus = `+${dial}${nationalDigits}`;
+      const formatted = window.intlTelInputUtils.formatNumber(
+        rawPlus,
+        data.iso2,
+        window.intlTelInputUtils.numberFormat.NATIONAL
+      );
+      tel.value = formatted || nationalDigits;
+    } else {
+      tel.value = nationalDigits;
+    }
+    atualizaHiddenTelefone();
+  };
 
-  // valida enquanto digita
-  nome.addEventListener("input", () => {
-    nome.value = nome.value.replace(/\s{2,}/g, " ");
-    validaNome();
-  });
+  const validaTelefone = () => {
+    if (!tel) return true;
+    atualizaHiddenTelefone();
 
-  // cpf: formata 000.000.000-00 e valida
-  cpf.addEventListener("input", () => {
-    const nums = cpf.value.replace(/\D/g, "").slice(0, 11);
-    let m = nums;
-    if (nums.length > 9)  m = nums.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/, "$1.$2.$3-$4");
-    else if (nums.length > 6) m = nums.replace(/(\d{3})(\d{3})(\d{0,3})/, "$1.$2.$3");
-    else if (nums.length > 3) m = nums.replace(/(\d{3})(\d{0,3})/, "$1.$2");
-    cpf.value = m;
+    const digits = (tel.value || "").replace(/\D/g, "");
+    if (!digits) return setErr(tel, eTel, "");
+
+    if (iti && window.intlTelInputUtils && typeof iti.isValidNumber === "function") {
+      return setErr(tel, eTel, iti.isValidNumber() ? "" : "Telefone inválido.");
+    }
+    // fallback leve se utils não carregou
+    return setErr(tel, eTel, digits.length >= 8 ? "" : "Telefone inválido.");
+  };
+
+  // e-mail/senha
+  const validaEmail = () => {
+    if (!email) return true;
+    const v = (email.value || "").trim();
+    if (!v) return setErr(email, eEmail, "Informe o e-mail.");
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    return setErr(email, eEmail, ok ? "" : "E-mail inválido.");
+  };
+
+  const validaSenha = () => {
+    if (!senha) return true;
+    const v = senha.value || "";
+    if (!v) return setErr(senha, eSenha, "Informe a senha.");
+    if (v.length < 6) return setErr(senha, eSenha, "Mínimo 6 caracteres.");
+    return setErr(senha, eSenha, "");
+  };
+
+  const validaConfirmacao = () => {
+    if (!s2 || !senha) return true;
+    const v = s2.value || "";
+    if (!v) return setErr(s2, eS2, "Confirme sua senha.");
+    if (v !== senha.value) return setErr(s2, eS2, "As senhas não coincidem.");
+    return setErr(s2, eS2, "");
+  };
+
+  // CEP
+  const formataCEP = (v) =>
+    soDigitos(v).slice(0, 8).replace(/^(\d{5})(\d{0,3})$/, "$1-$2");
+
+  const validaCEP = () => {
+    if (!cep) return true;
+    const dig = soDigitos(cep.value);
+    if (dig.length !== 8) return setErr(cep, eCEP, "CEP inválido.");
+    return setErr(cep, eCEP, "");
+  };
+
+  const preencheEndereco = (data) => {
+    if (endereco) endereco.value = data.logradouro || "";
+    if (cidade)   cidade.value   = data.localidade || "";
+    if (estado)   estado.value   = data.uf || "";
+    clearErr(endereco, eEnd);
+    clearErr(cidade,   eCid);
+    clearErr(estado,   eUF);
+  };
+
+  const buscarCEP = async () => {
+    if (!cep) return;
+    const dig = soDigitos(cep.value);
+    cepOk = false; // reseta até confirmar
+
+    if (dig.length !== 8) {
+      setErr(cep, eCEP, "CEP inválido.");
+      lockAddress(true);
+      return;
+    }
+    try {
+      clearErr(cep, eCEP);
+      const resp = await fetch(`https://viacep.com.br/ws/${dig}/json/`);
+      const data = await resp.json();
+      if (data.erro) {
+        setErr(cep, eCEP, "CEP incorreto ou não encontrado.");
+        lockAddress(true);
+        return;
+      }
+      preencheEndereco(data);
+      lockAddress(false);
+      cepOk = true;
+      // foca no número (usuario completa)
+      numero?.focus();
+    } catch (e) {
+      setErr(cep, eCEP, "Falha ao buscar CEP.");
+      lockAddress(true);
+      console.error(e);
+    }
+  };
+
+  // =========================
+  // eventos de input/máscaras
+  // =========================
+
+  // CPF: mantém o cursor pelo nº de dígitos antes do caret
+  cpf?.addEventListener("input", () => {
+    const raw = cpf.value;
+    const caret = cpf.selectionStart ?? raw.length;
+    const digitosAntes = (raw.slice(0, caret).match(/\d/g) || []).length;
+
+    const formatado = formataCPF(raw);
+    cpf.value = formatado;
+
+    let count = 0, newPos = formatado.length;
+    for (let i = 0; i < formatado.length; i++) {
+      if (/\d/.test(formatado[i])) {
+        count++;
+        if (count === digitosAntes) { newPos = i + 1; break; }
+      }
+    }
+    try { cpf.setSelectionRange(newPos, newPos); } catch(_) {}
     validaCPF();
   });
 
-  tel.addEventListener("input", () => validaTelefone());
-  email.addEventListener("input", () => validaEmail());
-  senha.addEventListener("input", () => validaSenha());
-  s2.addEventListener("input", () => validaConfirmacao());
-
-  // cep: mascara 00000-000
-  cep.addEventListener("input", () => {
-    const nums = cep.value.replace(/\D/g, "").slice(0, 8);
-    cep.value = nums.length > 5 ? nums.replace(/(\d{5})(\d{0,3})/, "$1-$2") : nums;
-    eCEP.textContent = "";
-    cep.classList.remove("input-erro");
+  cep?.addEventListener("input", () => {
+    const pos = cep.selectionStart;
+    cep.value = formataCEP(cep.value);
+    validaCEP();
+    try { cep.setSelectionRange(pos, pos); } catch(_) {}
   });
 
-  // botão ok do cep: consulta viacep
-  btnCep.addEventListener("click", async () => {
-    const puro = cep.value.replace(/\D/g, "");
-    if (puro.length !== 8) {
-      eCEP.textContent = "cep tem 8 dígitos (ex: 01001-000)";
-      cep.classList.add("input-erro");
-      return;
-    }
-    btnCep.disabled = true;
-    eCEP.textContent = "consultando...";
-    try {
-      const resp = await fetch(`https://viacep.com.br/ws/${puro}/json/`);
-      const data = await resp.json();
-      if (data.erro) throw new Error("cep não encontrado");
-      endereco.value = (data.logradouro || "").trim();
-      cidade.value   = (data.localidade || "").trim();
-      estado.value   = (data.uf || "").trim();
-      numero.disabled = false;
-      eCEP.textContent = "";
-      [endereco, cidade, estado].forEach(i => i.classList.remove("input-erro"));
-      numero.focus();
-    } catch (err) {
-      eCEP.textContent = "não rolou achar esse cep :/";
-      [endereco, cidade, estado].forEach(i => { i.value = ""; i.classList.add("input-erro"); });
-    } finally {
-      btnCep.disabled = false;
+  // enter no CEP dispara busca
+  cep?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      buscarCEP();
     }
   });
 
-  // helpers de validação (bem diretos)
-  function marcaErro(el, span, msg) {
-    span.textContent = msg || "";
-    if (msg) el.classList.add("input-erro"); else el.classList.remove("input-erro");
-  }
+  btnCep?.addEventListener("click", (e) => {
+    e.preventDefault();
+    buscarCEP();
+  });
 
-  function validaNome() {
-    const letras = (nome.value.match(/[a-záàâãéèêíïóôõöúçñ]/gi) || []).length;
-    if (letras < 3) { marcaErro(nome, eNome, "coloca pelo menos 3 letras"); return false; }
-    marcaErro(nome, eNome, "");
-    return true;
-  }
+  // Telefone
+  tel?.addEventListener("keydown", onlyDigitKey);
+  tel?.addEventListener("paste", sanitizePaste);
+  tel?.addEventListener("input", () => {
+    formatNational();
+    validaTelefone();
+  });
+  tel?.addEventListener("countrychange", () => {
+    formatNational();
+    validaTelefone();
+  });
 
-  function validaCPF() {
-    const nums = cpf.value.replace(/\D/g, "");
-    if (nums.length !== 11) { marcaErro(cpf, eCPF, "cpf tem 11 dígitos"); return false; }
-    if (/(^(\d)\1{10}$)/.test(nums)) { marcaErro(cpf, eCPF, "cpf inválido"); return false; }
-    const dig = (base) => {
-      let soma = 0;
-      for (let i = 0; i < base.length; i++) soma += parseInt(base[i], 10) * (base.length + 1 - i);
-      const r = (soma * 10) % 11;
-      return (r === 10) ? 0 : r;
-    };
-    const d1 = dig(nums.slice(0, 9));
-    const d2 = dig(nums.slice(0, 10));
-    const ok = d1 === parseInt(nums[9], 10) && d2 === parseInt(nums[10], 10);
-    if (!ok) { marcaErro(cpf, eCPF, "cpf inválido"); return false; }
-    marcaErro(cpf, eCPF, "");
-    return true;
-  }
+  // blur para mostrar obrigatoriedade cedo
+  nome?.addEventListener("blur", validaNome);
+  email?.addEventListener("blur", validaEmail);
+  senha?.addEventListener("blur", validaSenha);
+  s2?.addEventListener("blur", validaConfirmacao);
+  generoRadios.forEach((r) => r.addEventListener("change", validaGenero));
 
-  function validaGenero() {
-    const marcado = form.querySelector('input[name="genero"]:checked');
-    if (!marcado) { eGen.textContent = "escolhe uma opção"; return false; }
-    eGen.textContent = "";
-    return true;
-  }
+  // submissão
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  function validaTelefone() {
-    if (!ddiEscolhido) { marcaErro(tel, eTel, "escolhe o ddi no dropdown"); return false; }
-    const raw = tel.value.replace(/\D/g, "");
-    if (raw.length < 6) { marcaErro(tel, eTel, "número muito curto"); return false; }
-    const data = iti.getSelectedCountryData();
-    const ddi = data?.dialCode ? "+" + data.dialCode : "";
-    telDDI.value  = ddi;
-    telNat.value  = tel.value.trim();
-    telE164.value = ddi + raw;
-    marcaErro(tel, eTel, "");
-    return true;
-  }
+    const ok =
+      validaNome() &
+      validaCPF() &
+      validaGenero() &
+      validaTelefone() &
+      validaEmail() &
+      validaSenha() &
+      validaConfirmacao() &
+      validaCEP();
 
-  function validaEmail() {
-    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
-    if (!ok) { marcaErro(email, eEmail, "email meio estranho, confere aí"); return false; }
-    marcaErro(email, eEmail, "");
-    return true;
-  }
+    // CEP precisa estar confirmado para liberar endereço
+    if (!cepOk) {
+      setErr(cep, eCEP, "Confirme o CEP para preencher o endereço.");
+      lockAddress(true);
+    }
 
-  function validaSenha() {
-    const v = senha.value;
-    const ok = /[A-Za-z]/.test(v) && /\d/.test(v) && v.length >= 8;
-    if (!ok) { marcaErro(senha, eSenha, "mín 8, com letras e números"); return false; }
-    marcaErro(senha, eSenha, "");
-    if (s2.value) validaConfirmacao();
-    return true;
-  }
+    // valida mínimos de endereço SOMENTE se liberado
+    const okEnd   = (!endereco || endereco.readOnly) ? true : setErr(endereco, eEnd, (endereco.value || "").trim() ? "" : "Obrigatório.");
+    const okNum   = (!numero   || numero.readOnly)   ? true : setErr(numero,   eNum, (numero.value   || "").trim() ? "" : "Obrigatório.");
+    const okCid   = (!cidade   || cidade.readOnly)   ? true : setErr(cidade,   eCid, (cidade.value   || "").trim() ? "" : "Obrigatório.");
+    const okEstado= (!estado   || estado.readOnly)   ? true : setErr(estado,   eUF,  (estado.value   || "").trim() ? "" : "Obrigatório.");
 
-  function validaConfirmacao() {
-    if (s2.value !== senha.value || !s2.value) { marcaErro(s2, eS2, "as senhas não batem"); return false; }
-    marcaErro(s2, eS2, "");
-    return true;
-  }
+    const tudoOk = !!(ok & (cepOk ? (okEnd & okNum & okCid & okEstado) : 1));
 
-  function validaCEPPreenchido() {
-    let ok = true;
-    if (!endereco.value.trim()) { marcaErro(endereco, eEnd, "preenche pelo cep"); ok = false; } else marcaErro(endereco, eEnd, "");
-    if (!cidade.value.trim())   { marcaErro(cidade,   eCid, "preenche pelo cep"); ok = false; } else marcaErro(cidade,   eCid, "");
-    if (!estado.value.trim())   { marcaErro(estado,   eUF,  "preenche pelo cep"); ok = false; } else marcaErro(estado,   eUF,  "");
-    if (numero.disabled || !numero.value.trim()) { marcaErro(numero, eNum, "informa o número"); ok = false; } else marcaErro(numero, eNum, "");
-    return ok;
-  }
-
-  // valida tudo no submit e mostra tudo de uma vez
-  form.addEventListener("submit", (ev) => {
-    ev.preventDefault();
-
-    const okNome  = validaNome();
-    const okCPF   = validaCPF();
-    const okGen   = validaGenero();
-    const okTel   = validaTelefone();
-    const okEmail = validaEmail();
-    const okSenha = validaSenha();
-    const okS2    = validaConfirmacao();
-    const okCEP   = validaCEPPreenchido();
-
-    const tudoOk = okNome && okCPF && okGen && okTel && okEmail && okSenha && okS2 && okCEP;
-
-    if (tudoOk) {
-      alert("form válido! (aqui você enviaria pro backend)");
-      // form.submit(); // se quiser mandar de verdade
+    if (tudoOk && cepOk) {
+      alert("Formulário válido! ✅");
+      // form.submit(); // se tiver backend
     } else {
-      const primeiroErro = form.querySelector(".input-erro") || form.querySelector(".erro:not(:empty)");
+      const primeiroErro =
+        form.querySelector(".input-erro") ||
+        form.querySelector(".erro:not(:empty)");
       if (primeiroErro) {
-        primeiroErro.scrollIntoView({ behavior: "smooth", block: "center" });
+        (primeiroErro.scrollIntoView
+          ? primeiroErro
+          : form
+        ).scrollIntoView?.({ behavior: "smooth", block: "center" });
       }
     }
   });
