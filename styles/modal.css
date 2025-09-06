@@ -1,0 +1,17 @@
+ * { box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; padding: 24px; }
+    #cadastro { max-width: 560px; margin: 0 auto; }
+    form > div { margin-bottom: 14px; }
+    label { display: block; margin-bottom: 6px; }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+    .linha { display: flex; gap: 10px; align-items: end; }
+    .linha > div { flex: 1; }
+    .erro { color: #d00; font-size: 13px; display: block; margin-top: 4px; min-height: 16px; }
+    .input-erro { border-color: #d00 !important; outline: none; }
+    button[type="button"], button[type="submit"] { padding: 10px 14px; border: 0; background: #111; color: #fff; border-radius: 6px; cursor: pointer; }
+    button[disabled] { opacity: .6; cursor: not-allowed; }
+    /* intl-tel-input ocupa 100% do campo */
+    .iti { width: 100%; }
