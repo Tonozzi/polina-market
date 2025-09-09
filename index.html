@@ -2,6 +2,7 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Polina Market</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,32 +19,33 @@
     <link rel="icon" href="assets/logomain.png" />
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="styles/modal.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.5/build/css/intlTelInput.css">
-
   </head>
 
   <body>
-    
-   <header>
+    <!-- Acesso rápido ao conteúdo principal para leitores de tela e navegação por teclado -->
+    <a href="#conteudo-principal" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">Pular para o conteúdo principal</a>
+
+    <header role="banner">
       <div class="logo">
         <img id="logoHeader"
           src="assets/logo.png"
-          alt="Polina - Mercado de produtos do leste europeu"
+          alt="Polina Market — Mercado de produtos do leste europeu"
         />
       </div>
-      <nav>
+      <!-- Navegação principal do site -->
+      <nav aria-label="Navegação principal">
         <ul class="headerLista">
           <li><a href="#sobre-nos">Sobre nós</a></li>
           <li class="dropdown">
-            <a href="#servicos">Serviços <img src="assets/arrow_drop_down_16dp_FFFFFF_FILL0_wght400_GRAD0_opsz20.svg"></a>
+            <a href="#servicos">Serviços <img src="assets/arrow_drop_down_16dp_FFFFFF_FILL0_wght400_GRAD0_opsz20.svg" alt="" aria-hidden="true"></a>
             <ul class="submenu">
               <li><a href="#servicos">TeleEntrega</a></li>
               <li><a href="#servicos">Retirada</a></li>
             </ul>
           </li>
           <li class="dropdown">
-            <a href="#produtos">Produtos <img src="assets/arrow_drop_down_16dp_FFFFFF_FILL0_wght400_GRAD0_opsz20.svg"></a>
+            <a href="#produtos">Produtos <img src="assets/arrow_drop_down_16dp_FFFFFF_FILL0_wght400_GRAD0_opsz20.svg" alt="" aria-hidden="true"></a>
             <ul class="submenu">
               <li><a href="produtos.html#cat-alimentos">Alimentos não perecíveis</a></li>
               <li><a href="produtos.html#cat-tipicos">Alimentos típicos</a></li>
@@ -53,317 +55,350 @@
             </ul>
           </li>
           <li><a href="./contato.html">Contato</a></li>
-          <li id="cadastroNav"><img src="assets/cadastro.svg"><a href="#cadastro">Cadastro</a></li>
-          <li id="cadastroNav"><img src="assets/login.svg"><a href="#login">Login</a></li>
+          <li id="cadastroNav"><img src="assets/cadastro.svg" alt="" aria-hidden="true"><a href="#cadastro">Cadastro</a></li>
+          <li id="loginNav"><img src="assets/login.svg" alt="" aria-hidden="true"><a href="#login">Login</a></li>
         </ul>
       </nav>
     </header>
     
-    <main class="main">
-      <section class="carosselContainer">
+    <main class="main" id="conteudo-principal" role="main">
+      <section class="carosselContainer" aria-label="Destaques">
         <div class="carrossel">
-        <div class="slideAtivo">
-          <img src="assets/slide1.png" alt="Bem Vindo ao site" />
+          <div class="slideAtivo">
+            <img src="assets/slide1.png" alt="Bem-vindo ao site" />
+          </div>
+          <div class="slide">
+            <img src="assets/slide2.png" alt="Alimentos típicos" />
+          </div>
+          <div class="slide">
+            <img src="assets/slide3.png" alt="Serviços de entrega" />
+          </div>
         </div>
-        <div class="slide">
-          <img src="assets/slide2.png" alt="Alimentos típicos" />
-        </div>
-        <div class="slide">
-          <img src="assets/slide3.png" alt="Serviços de entrega" />
-        </div>
-        </div>
-       <div class="dots">
-  <input type="radio" name="slide" id="dot1" checked>
-  <label for="dot1"></label>
 
-  <input type="radio" name="slide" id="dot2">
-  <label for="dot2"></label>
+        <!-- Os controles abaixo são rádios usados como 'bolinhas' do carrossel.
+             Eles são visíveis/operáveis por teclado e cada um recebe rótulo. -->
+        <div class="dots" role="tablist" aria-label="Selecionar slide">
+          <input type="radio" name="slide" id="dot1" checked aria-label="Slide 1">
+          <label for="dot1"></label>
 
-  <input type="radio" name="slide" id="dot3">
-  <label for="dot3"></label>
+          <input type="radio" name="slide" id="dot2" aria-label="Slide 2">
+          <label for="dot2"></label>
 
-  
-</div>
-<!---botoes escondidos do carossel. Display none-->
+          <input type="radio" name="slide" id="dot3" aria-label="Slide 3">
+          <label for="dot3"></label>
+        </div>
+
         <div class="botoesCarossel">
-        <button class="anterior" id="cBotao">
-          <img src="./assets/chevron_left.svg" alt="" />
-        </button>
-        <button class="proximo"id="cBotao">
-          <img src="./assets/chevron_right.svg" />
-        </button>
-      </div>
-       
-      </section>
-      <section id="sobre-nos">
-        <h2>Sobre nós</h2>
-        <p>
-          O Mercado Polina nasceu da dificuldade da nossa família em encontrar
-          produtos típicos sérvios e de outros países balcãs e eslavos para
-          manter vivas suas tradições. Com esse propósito, reunimos em um só
-          lugar itens autênticos que raramente se encontram em Porto Alegre,
-          além de produtos do dia a dia, sempre com destaque para os sabores e
-          culturas da nossa origem.
-        </p>
-      </section>
-
-      <section id="servicos">
-        <h2>Serviços</h2>
-        <p>Conheça os nossos serviços para facilitar o seu dia a dia!</p>
-        <div class="grid-servicos">
-          <div class="servico">
-            <img src="assets/retiraricon.svg" alt="TeleEntrega" />
-            <h3>Tele Entrega</h3>
-            <p>
-              Selecione os seus produtos e entre em contato pelo whatsapp para
-              agendar a entrega. Valor a consultar.
-            </p>
-          </div>
-          <div class="servico">
-            <img src="./assets/IconShip.svg" alt="Retirada" />
-            <h3>Retirada</h3>
-            <p>Retire os seus produtos na loja mais próxima gratuitamente. </p>
-          </div>
+          <button class="anterior" id="cBotao" aria-label="Slide anterior">
+            <img src="./assets/chevron_left.svg" alt="" aria-hidden="true" />
+          </button>
+          <button class="proximo" id="cBotao" aria-label="Próximo slide">
+            <img src="./assets/chevron_right.svg" alt="" aria-hidden="true" />
+          </button>
         </div>
       </section>
+
+      <div class="containerInformacoes">
+        <section id="sobre-nos">
+          <h2>Sobre nós</h2>
+          <p>
+            O Mercado Polina nasceu da dificuldade da nossa família em encontrar
+            produtos típicos sérvios e de outros países balcãs e eslavos para
+            manter vivas suas tradições. Com esse propósito, reunimos em um só
+            lugar itens autênticos que raramente se encontram em Porto Alegre,
+            além de produtos do dia a dia, sempre com destaque para os sabores e
+            culturas da nossa origem.
+          </p>
+        </section>
+
+        <section id="servicos">
+          <h2>Serviços</h2>
+          <p>Conheça os nossos serviços para facilitar o seu dia a dia!</p>
+          <div class="grid-servicos">
+            <div class="servico">
+              <img src="assets/retiraricon.svg" alt="Tele Entrega" />
+              <h3>Tele Entrega</h3>
+              <p>
+                Selecione os seus produtos e entre em contato pelo whatsapp para
+                agendar a entrega. Valor a consultar.
+              </p>
+            </div>
+            <div class="servico">
+              <img src="./assets/IconShip.svg" alt="Retirada" />
+              <h3>Retirada</h3>
+              <p>Retire os seus produtos na loja mais próxima gratuitamente. </p>
+              <p>Já efetuou um pedido? Agende a sua retirada!</p>
+              <button id="btnAgendarRetirada" class="btn-primario">Agendar retirada</button>
+            </div>
+          </div>
+        </section>
+      </div>
 
       <section id="produtos">
         <h2>Produtos</h2>
         <p>
           Conheça as nossas categorias de produtos. Escolha uma para visualizar
-          os items.
+          os itens.
         </p>
 
         <section id="categoria">
-  <label>
-    <a href="produtos.html#cat-alimentos">
-      <span>Alimentos não perecíveis</span>
-      <img
-        src="./assets/cleaningback.webp"
-        alt=""
-        class="imagensCategorias"
-      />
-    </a>
-  </label>
-</section>
+          <label>
+            <a href="produtos.html#cat-alimentos">
+              <span>Alimentos não perecíveis</span>
+              <img
+                src="./assets/cleaningback.webp"
+                alt="Categoria: alimentos não perecíveis"
+                class="imagensCategorias"
+              />
+            </a>
+          </label>
+        </section>
 
-<section id="categoria">
-  <label>
-    <a href="produtos.html#cat-tipicos">
-      <span>Alimentos típicos</span>
-      <img
-        src="./assets/tipicos.jpg"
-        alt=""
-        class="imagensCategorias"
-      />
-    </a>
-  </label>
-</section>
+        <section id="categoria">
+          <label>
+            <a href="produtos.html#cat-tipicos">
+              <span>Alimentos típicos</span>
+              <img
+                src="./assets/tipicos.jpg"
+                alt="Categoria: alimentos típicos"
+                class="imagensCategorias"
+              />
+            </a>
+          </label>
+        </section>
 
-<section id="categoria">
-  <label>
-    <a href="produtos.html#cat-higiene">
-      <span>Higiene pessoal</span>
-      <img
-        src="./assets/selfcareback.jpg"
-        alt=""
-        class="imagensCategorias"
-      />
-    </a>
-  </label>
-</section>
+        <section id="categoria">
+          <label>
+            <a href="produtos.html#cat-higiene">
+              <span>Higiene pessoal</span>
+              <img
+                src="./assets/selfcareback.jpg"
+                alt="Categoria: higiene pessoal"
+                class="imagensCategorias"
+              />
+            </a>
+          </label>
+        </section>
 
-<section id="categoria">
-  <label>
-    <a href="produtos.html#cat-limpeza">
-      <span>Limpeza</span>
-      <img
-        src="./assets/pereciveisback.jpeg"
-        alt=""
-        class="imagensCategorias"
-      />
-    </a>
-  </label>
-</section>
+        <section id="categoria">
+          <label>
+            <a href="produtos.html#cat-limpeza">
+              <span>Limpeza</span>
+              <img
+                src="./assets/pereciveisback.jpeg"
+                alt="Categoria: limpeza"
+                class="imagensCategorias"
+              />
+            </a>
+          </label>
+        </section>
 
-<section id="categoria">
-  <label>
-    <a href="produtos.html#cat-hortalicas">
-      <span>Frutas e legumes</span>
-      <img
-        src="./assets/verdurasback.jpg"
-        alt=""
-        class="imagensCategorias"
-      />
-    </a>
-  </label>
-</section>
+        <section id="categoria">
+          <label>
+            <a href="produtos.html#cat-hortalicas">
+              <span>Frutas e legumes</span>
+              <img
+                src="./assets/verdurasback.jpg"
+                alt="Categoria: frutas e legumes"
+                class="imagensCategorias"
+              />
+            </a>
+          </label>
+        </section>
       </section>
-
       
     </main>
-    <footer class="footer">
+
+    <footer class="footer" role="contentinfo">
       <div class="containerLeft">
-       <div class="unidades">
-        <h3 class="tituloLista">Unidades</h3>
-    <ul class="footerListas">
-      
-      <li><a href="contato.html">Moinhos</a></li>
-      <li><a href="contato.html">Gramado</a></li>
-    </ul>
-  </div>
-  <div class="infoFooter">
-    <ul class="footerListas">
-      <li><a href="#sobre-nos">Sobre Nós</a></li>
-      <li><a href="#servicos">Serviços</a></li>
-      <li><a href="#produtos">Produtos</a></li>
-      <li><a href="#cadastro">Contato</a></li>
-    </ul>
-  </div>
-  </div>
+        <div class="unidades">
+          <h3 class="tituloLista">Unidades</h3>
+          <ul class="footerListas">
+            <li><a href="contato.html">Moinhos</a></li>
+            <li><a href="contato.html">Gramado</a></li>
+          </ul>
+        </div>
+        <div class="infoFooter">
+          <ul class="footerListas">
+            <li><a href="#sobre-nos">Sobre Nós</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#produtos">Produtos</a></li>
+            <li><a href="#cadastro">Contato</a></li>
+          </ul>
+        </div>
+      </div>
 
       <div class="containerLogoF">
-        <img src="assets/logo.png">
+        <img src="assets/logo.png" alt="Logomarca Polina Market">
       </div>
-      <section class="infosLaterais">
+      <section class="infosLaterais" aria-label="Informações de atendimento">
         <div id="atendimentoTel">
           <h1>Central de atendimento:</h1> 
-          <a href="https://web.whatsapp.com/" >(51) 99999-9999</a>
+          <a href="https://web.whatsapp.com/" aria-label="Central de atendimento via WhatsApp, número (51) 99999-9999">(51) 99999-9999</a>
         </div>
         <div id="atendimentoInfo">
-          <p id="atendimentoP">Horário de atendimento: </br>
+          <p id="atendimentoP">Horário de atendimento: <br>
           De segunda à sexta, das 08h às 18h
           </p>
         </div>
-
       </section>
-
-      </div>
     </footer>
- <div id="cadastro">
-    <h2>Cadastro</h2>
 
-    <form action="#" method="post" novalidate>
-      <div>
-        <label for="nome">Nome</label>
-        <input type="text" id="nome" name="nome" autocomplete="name" />
-        <span class="erro" id="erro-nome"></span>
-      </div>
+    <!-- os modais ficam fora da tag main para não serem anunciados como parte do conteúdo principal e para facilitar a aplicação do) em toda a página. -->
+    <div class="containerModais" aria-hidden="true">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="cadastroTitulo">
+        <button class="close" aria-label="Fechar modal de cadastro/login">
+          <img src="./assets/close_24dp_0A6BAD_FILL0_wght400_GRAD0_opsz24.svg" alt="" aria-hidden="true">
+        </button>
 
-      <div>
-        <label for="cpf">CPF</label>
-        <input type="text" id="cpf" name="cpf" inputmode="numeric" maxlength="14" autocomplete="off" aria-describedby="erro-cpf" />
-        <span class="erro" id="erro-cpf"></span>
-      </div>
-
-      <div>
-        <label>Gênero</label>
-        <label><input type="radio" name="genero" value="feminino" /> Feminino</label>
-        <label><input type="radio" name="genero" value="masculino" /> Masculino</label>
-        <label><input type="radio" name="genero" value="nao-informar" /> Prefiro não dizer</label>
-        <span class="erro" id="erro-genero"></span>
-      </div>
-
-      <div>
-        <label for="telefone">Telefone</label>
-        <input type="tel" id="telefone" name="telefone" autocomplete="tel" />
-        <input type="hidden" id="tel_ddi" name="tel_ddi">
-        <input type="hidden" id="tel_nacional" name="tel_nacional">
-        <input type="hidden" id="tel_e164" name="tel_e164">
-        <span class="erro" id="erro-telefone"></span>
-      </div>
-
-      <div>
-        <label for="emailCadastro">Email</label>
-        <input type="email" id="emailCadastro" name="email" autocomplete="email" />
-        <span class="erro" id="erro-email"></span>
-      </div>
-
-      <div>
-        <label for="senhaCadastro">Senha</label>
-        <input type="password" id="senhaCadastro" name="senha" autocomplete="new-password" />
-        <span class="erro" id="erro-senha"></span>
-      </div>
-
-      <div>
-        <label for="confirma_senha">Confirmar Senha</label>
-        <input type="password" id="confirma_senha" name="confirma_senha" autocomplete="new-password" />
-        <span class="erro" id="erro-confirma-senha"></span>
-      </div>
-
-      <div class="linha">
-        <div>
-          <label for="cep">CEP</label>
-          <input type="text" id="cep" name="cep" inputmode="numeric" maxlength="9" />
-          <span class="erro" id="erro-cep"></span>
+        <!-- tabs- cada botão controla um painel associado via aria-controls -->
+        <div class="tabs" role="tablist" aria-label="Trocar formulário">
+          <button class="tab active" id="tab-cadastro" data-target="cadastro" role="tab" aria-selected="true" aria-controls="cadastro">Cadastro</button>
+          <button class="tab" id="tab-login" data-target="login" role="tab" aria-selected="false" aria-controls="login">Login</button>
         </div>
-        <div style="flex:0 0 auto">
-          <button type="button" id="btn-cep">Confirmar
-            
-          </button>
+
+        <!-- Painel de cadastro -->
+        <div id="cadastro" role="tabpanel" aria-labelledby="tab-cadastro">
+          <h2 class="h2form" id="cadastroTitulo">Cadastro</h2>
+          <form action="#" method="post" novalidate>
+            <div>
+              <input type="text" id="nome" name="nome" autocomplete="name" placeholder="Nome completo" />
+              <span class="erro" id="erro-nome" aria-live="polite"></span>
+            </div>
+
+            <div>
+              <input type="text" id="cpf" name="cpf" inputmode="numeric" maxlength="14" autocomplete="off" aria-describedby="erro-cpf" placeholder="CPF" />
+              <span class="erro" id="erro-cpf" aria-live="polite"></span>
+            </div>
+
+            <div class="genero">
+              <label><input type="radio" name="genero" value="feminino" /> Feminino</label>
+              <label><input type="radio" name="genero" value="masculino" /> Masculino</label>
+              <label><input type="radio" name="genero" value="nao-informar" /> Prefiro não dizer</label>
+              <span class="erro" id="erro-genero" aria-live="polite"></span>
+            </div>
+
+            <div class="intTelefone">
+              <input type="tel" id="telefone" name="telefone" autocomplete="tel" placeholder="Telefone" />
+              <input type="hidden" id="tel_ddi" name="tel_ddi">
+              <input type="hidden" id="tel_nacional" name="tel_nacional">
+              <input type="hidden" id="tel_e164" name="tel_e164">
+              <span class="erro" id="erro-telefone" aria-live="polite"></span>
+            </div>
+
+            <div>
+              <input type="email" id="emailCadastro" name="email" autocomplete="email" placeholder="E-mail" />
+              <span class="erro" id="erro-email" aria-live="polite"></span>
+            </div>
+
+            <div>
+              <input type="password" id="senhaCadastro" name="senha" autocomplete="new-password" placeholder="Senha" />
+              <span class="erro" id="erro-senha" aria-live="polite"></span>
+            </div>
+
+            <div>
+              <input type="password" id="confirma_senha" name="confirma_senha" autocomplete="new-password" placeholder="Confirmar senha" />
+              <span class="erro" id="erro-confirma-senha" aria-live="polite"></span>
+            </div>
+
+            <div class="linha">
+              <div>
+                <input type="text" id="cep" name="cep" inputmode="numeric" maxlength="9" placeholder="CEP" />
+                <span class="erro" id="erro-cep" aria-live="polite"></span>
+              </div>
+              <div style="flex:0 0 auto">
+                <button type="button" id="btn-cep">Confirmar</button>
+              </div>
+            </div>
+
+            <div>
+              <input type="text" id="endereco" name="endereco" readonly placeholder="Endereço" />
+              <span class="erro" id="erro-endereco" aria-live="polite"></span>
+            </div>
+
+            <div>
+              <input type="text" id="numero" name="numero" placeholder="Número" />
+              <span class="erro" id="erro-numero" aria-live="polite"></span>
+            </div>
+
+            <div>
+              <input type="text" id="cidade" name="cidade" readonly placeholder="Cidade" />
+              <span class="erro" id="erro-cidade" aria-live="polite"></span>
+            </div>
+
+            <div>
+              <input type="text" id="estado" name="estado" readonly placeholder="Estado" />
+              <span class="erro" id="erro-estado" aria-live="polite"></span>
+            </div>
+
+            <div>
+              <button type="submit" id="btn-cadastro">Cadastro</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="containerLogin">
+          <!-- Painel de Login (separado do formulário de cadastro -->
+          <div id="login" role="tabpanel" aria-labelledby="tab-login" hidden>
+            <h2 class="h2form" id="loginTitulo">Login</h2>
+            <div>
+              <label for="emailLogin">Email</label>
+              <input type="email" id="emailLogin" name="emailLogin" required />
+            </div>
+            <div>
+              <label for="senhaLogin">Senha</label>
+              <input type="password" id="senhaLogin" name="senhaLogin" required />
+            </div>
+            <a class="esqueciSenha" href="">Esqueceu a senha?</a>
+            <div>
+              <button type="button">Login</button>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div>
-        <label for="endereco">Endereço</label>
-        <input type="text" id="endereco" name="endereco" readonly />
-        <span class="erro" id="erro-endereco"></span>
-      </div>
-
-      <div>
-        <label for="numero">Número</label>
-        <input type="text" id="numero" name="numero"  />
-        <span class="erro" id="erro-numero"></span>
-      </div>
-
-      <div>
-        <label for="cidade">Cidade</label>
-        <input type="text" id="cidade" name="cidade" readonly />
-        <span class="erro" id="erro-cidade"></span>
-      </div>
-
-      <div>
-        <label for="estado">Estado</label>
-        <input type="text" id="estado" name="estado" readonly />
-        <span class="erro" id="erro-estado"></span>
-      </div>
-
-      <div>
-        <button type="submit" id="btn-cadastro">Cadastro</button>
-      </div>
-    </form>
-  </div>
-
-  <div id="login">
-    <h2>Login</h2>
-    <div>
-      <label for="emailLogin">Email</label>
-      <input type="email" id="emailLogin" name="emailLogin" required />
     </div>
-    <div>
-      <label for="senhaLogin">Senha</label>
-      <input type="password" id="senhaLogin" name="senhaLogin" required />
+
+    <!-- Modal de agendamento de retirada -->
+    <div class="containerAgendar" aria-hidden="true">
+      <div class="modal" role="dialog" aria-labelledby="agendarTitulo" aria-modal="true">
+        <button class="close" aria-label="Fechar agendamento">
+          <img src="./assets/close_24dp_0A6BAD_FILL0_wght400_GRAD0_opsz24.svg" alt="" aria-hidden="true">
+        </button>
+
+        <h2 id="agendarTitulo" class="h2form">Agendar retirada</h2>
+
+        <form id="formAgendar" novalidate>
+          <div>
+            <input type="text" id="agendarNome" name="agendarNome" placeholder="Nome do cliente" required />
+            <span class="erro" id="erro-agendar-nome" aria-live="polite"></span>
+          </div>
+
+          <div>
+            <input type="text" id="agendarPedido" name="agendarPedido" inputmode="numeric" placeholder="Número do pedido" required />
+            <span class="erro" id="erro-agendar-pedido" aria-live="polite"></span>
+          </div>
+
+          <div class="linha">
+            <div>
+              <input type="date" id="agendarData" name="agendarData" required />
+              <span class="erro" id="erro-agendar-data" aria-live="polite"></span>
+            </div>
+            <div>
+              <input type="time" id="agendarHora" name="agendarHora" min="10:00" max="17:00" step="1800" required />
+              <span class="erro" id="erro-agendar-hora" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <div>
+            <button type="submit" id="btnSalvarAgendamento">Confirmar</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <a class="esqueciSenha" href="">Esqueceu a senha?</a>
-    <div>
-      <button type="button">Login</button>
-    </div>
-  </div>
   
-<script src="scripts/carossel.js" defer></script>
-<script src="scripts/include.js" defer></script>
-<script src="
-https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.5/build/js/intlTelInput.min.js
-"></script>
-<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.5/build/js/intlTelInput.min.js"></script>
-
-<script src="scripts/forms.js"></script>
-
+    <script src="scripts/carossel.js" defer></script>
+    <script src="scripts/include.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.5/build/js/intlTelInput.min.js"></script>
+    <script src="scripts/forms.js"></script>
   </body>
-  
-  
 </html>
-
-
-
-

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Parallax </title>
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    min-height: 100%;
+    background-image:
+      url('assets/catedral.png'),    
+      url("assets/pngwing.com.png"), 
+      url("assets/Alfabeto\ em\ branco.png"),
+      url('assets/ceu.jpg');
+
+    background-repeat: repeat-x, repeat-x, repeat-x, no-repeat;
+
+    background-position:
+      0 bottom,
+      0 bottom,
+      0 bottom,
+      center top;
+
+   
+    background-size:
+      800px,  
+      auto,
+      auto,
+      cover;
+
+    animation: parallax 50s linear infinite;
+  }
+
+  @keyframes parallax {
+    100% {
+      background-position:
+        -800px bottom,   /* catedral */
+        -500px bottom,   /* pngwing */
+         500px bottom,   
+        center top;      /* céu */
+    }
+  }
+</style>
+</head>
+<body></body>
+</html>

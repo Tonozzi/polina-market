@@ -1,10 +1,10 @@
-console.log("teste" );
+console.log("teste");
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("#cadastro form");
   if (!form) return;
 
-  // pega campos
+  // pegae campos
   const nome   = form.querySelector("#nome");
   const cpf    = form.querySelector("#cpf");
   const tel    = form.querySelector("#telefone");
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const eCid    = form.querySelector("#erro-cidade");
   const eUF     = form.querySelector("#erro-estado");
 
-  // campos ocultos do telefone (se existirem)
+  // campos ocultos do telefone 
   const telDDI  = form.querySelector("#tel_ddi");
   const telNat  = form.querySelector("#tel_nacional");
   const telE164 = form.querySelector("#tel_e164");
@@ -50,8 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const soDigitos = (v) => (v || "").replace(/\D/g, "");
 
-  // ============== BLOQUEIO DE ENDEREÇO ATÉ CONFIRMAR CEP ==============
-  let cepOk = false; // só fica true após ViaCEP OK
+  let cepOk = false; // só fica true após viacep validar
 
   const lockAddress = (lock) => {
     [endereco, numero, cidade, estado].forEach((el) => {
@@ -59,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
       el.readOnly = !!lock;
       el.classList.toggle("bloqueado", !!lock);
       if (lock) {
-        // limpa mensagens de erro de endereço enquanto bloqueado
         if (el === endereco) clearErr(endereco, eEnd);
         if (el === numero)   clearErr(numero,   eNum);
         if (el === cidade)   clearErr(cidade,   eCid);
@@ -68,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // inicia bloqueado
+  // bloqueio de campos até que o CEP seja inserido e validado
   lockAddress(true);
 
   // validações
@@ -114,15 +112,13 @@ document.addEventListener("DOMContentLoaded", () => {
     return setErr(null, eGen, marcado ? "" : "Selecione uma opção.");
   };
 
-  // =========================
-  // Telefone com intl-tel-input (somente dígitos, formatação/validação por país)
-  // =========================
+  // telefone usando a lib "tel input" para inserir ddi internacionais
   let iti = null;
   if (tel && window.intlTelInput) {
     try {
       iti = window.intlTelInput(tel, {
         initialCountry: "br",
-        separateDialCode: true,        // input contém só ddd+número
+        separateDialCode: true,
         nationalMode: true,
         autoPlaceholder: "aggressive",
         preferredCountries: ["br","us","pt","ar"],
@@ -200,11 +196,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (iti && window.intlTelInputUtils && typeof iti.isValidNumber === "function") {
       return setErr(tel, eTel, iti.isValidNumber() ? "" : "Telefone inválido.");
     }
-    // fallback leve se utils não carregou
     return setErr(tel, eTel, digits.length >= 8 ? "" : "Telefone inválido.");
   };
 
-  // e-mail/senha
+  // email e senha
   const validaEmail = () => {
     if (!email) return true;
     const v = (email.value || "").trim();
@@ -229,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return setErr(s2, eS2, "");
   };
 
-  // CEP
+  // FORMATACAO DO CEP
   const formataCEP = (v) =>
     soDigitos(v).slice(0, 8).replace(/^(\d{5})(\d{0,3})$/, "$1-$2");
 
@@ -252,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const buscarCEP = async () => {
     if (!cep) return;
     const dig = soDigitos(cep.value);
-    cepOk = false; // reseta até confirmar
+    cepOk = false;
 
     if (dig.length !== 8) {
       setErr(cep, eCEP, "CEP inválido.");
@@ -271,7 +266,6 @@ document.addEventListener("DOMContentLoaded", () => {
       preencheEndereco(data);
       lockAddress(false);
       cepOk = true;
-      // foca no número (usuario completa)
       numero?.focus();
     } catch (e) {
       setErr(cep, eCEP, "Falha ao buscar CEP.");
@@ -280,11 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // =========================
-  // eventos de input/máscaras
-  // =========================
-
-  // CPF: mantém o cursor pelo nº de dígitos antes do caret
+  // mantém o cursor
   cpf?.addEventListener("input", () => {
     const raw = cpf.value;
     const caret = cpf.selectionStart ?? raw.length;
@@ -336,14 +326,14 @@ document.addEventListener("DOMContentLoaded", () => {
     validaTelefone();
   });
 
-  // blur para mostrar obrigatoriedade cedo
+  // blur para mostrar obrigatoriedade
   nome?.addEventListener("blur", validaNome);
   email?.addEventListener("blur", validaEmail);
   senha?.addEventListener("blur", validaSenha);
   s2?.addEventListener("blur", validaConfirmacao);
   generoRadios.forEach((r) => r.addEventListener("change", validaGenero));
 
-  // submissão
+  // submit
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -357,13 +347,11 @@ document.addEventListener("DOMContentLoaded", () => {
       validaConfirmacao() &
       validaCEP();
 
-    // CEP precisa estar confirmado para liberar endereço
     if (!cepOk) {
       setErr(cep, eCEP, "Confirme o CEP para preencher o endereço.");
       lockAddress(true);
     }
 
-    // valida mínimos de endereço SOMENTE se liberado
     const okEnd   = (!endereco || endereco.readOnly) ? true : setErr(endereco, eEnd, (endereco.value || "").trim() ? "" : "Obrigatório.");
     const okNum   = (!numero   || numero.readOnly)   ? true : setErr(numero,   eNum, (numero.value   || "").trim() ? "" : "Obrigatório.");
     const okCid   = (!cidade   || cidade.readOnly)   ? true : setErr(cidade,   eCid, (cidade.value   || "").trim() ? "" : "Obrigatório.");
@@ -372,18 +360,305 @@ document.addEventListener("DOMContentLoaded", () => {
     const tudoOk = !!(ok & (cepOk ? (okEnd & okNum & okCid & okEstado) : 1));
 
     if (tudoOk && cepOk) {
-      alert("Formulário válido! ✅");
-      // form.submit(); // se tiver backend
+      alert("Cadastro enviado!");
+      // form.submit();
     } else {
       const primeiroErro =
         form.querySelector(".input-erro") ||
         form.querySelector(".erro:not(:empty)");
       if (primeiroErro) {
-        (primeiroErro.scrollIntoView
-          ? primeiroErro
-          : form
-        ).scrollIntoView?.({ behavior: "smooth", block: "center" });
+        (primeiroErro.scrollIntoView ? primeiroErro : form)
+          .scrollIntoView?.({ behavior: "smooth", block: "center" });
       }
     }
   });
+
+  const modalContainer = document.querySelector(".containerModais");
+  const closeBtn = document.querySelector(".close");
+
+  closeBtn?.addEventListener("click", () => {
+    modalContainer.style.display = "none";
+  });
+
+  modalContainer?.addEventListener("click", (e) => {
+    if (e.target === modalContainer) {
+      modalContainer.style.display = "none";
+    }
+  });
+
+  const cadastroBox = document.querySelector("#cadastro");
+  const loginBox = document.querySelector("#login");
+  const tabs = Array.from(document.querySelectorAll(".tab"));
+
+  const cadastroNav = document.querySelector("#cadastroNav");
+  const loginNav = document.querySelector("#loginNav");
+
+  function showModal() {
+    modalContainer.style.display = "flex";
+    document.body.classList.add("modal-open");
+  }
+  function hideModal() {
+    modalContainer.style.display = "none";
+    document.body.classList.remove("modal-open");
+  }
+
+  function showTab(targetId) {
+    const isCadastro = targetId === "cadastro";
+    cadastroBox.hidden = !isCadastro;
+    loginBox.hidden = isCadastro;
+
+    tabs.forEach(btn => {
+      const active = btn.dataset.target === targetId;
+      btn.classList.toggle("active", active);
+      btn.setAttribute("aria-selected", active ? "true" : "false");
+      if (active) btn.focus({ preventScroll: true });
+    });
+  }
+
+  tabs.forEach(btn => {
+    btn.addEventListener("click", () => showTab(btn.dataset.target));
+  });
+
+  document.querySelector(".tabs")?.addEventListener("keydown", (e) => {
+    if (!["ArrowLeft","ArrowRight"].includes(e.key)) return;
+    e.preventDefault();
+    const idx = tabs.findIndex(b => b.classList.contains("active"));
+    const next = e.key === "ArrowRight" ? (idx+1)%tabs.length : (idx-1+tabs.length)%tabs.length;
+    tabs[next].click();
+  });
+
+  if (cadastroNav) {
+    cadastroNav.addEventListener("click", (e) => {
+      e.preventDefault();
+      showModal();
+      showTab("cadastro");
+    });
+  }
+  if (loginNav) {
+    loginNav.addEventListener("click", (e) => {
+      e.preventDefault();
+      showModal();
+      showTab("login");
+    });
+  }
+
+  if (closeBtn) closeBtn.addEventListener("click", hideModal);
+  modalContainer?.addEventListener("click", (e) => {
+    if (e.target === modalContainer) hideModal();
+  });
+
+  if (location.hash === "#login" || location.hash === "#cadastro") {
+    showModal();
+    showTab(location.hash.replace("#",""));
+  }
+
+  function adjustModalHeight() {
+    const modal = document.querySelector(".modal");
+    const cadastro = document.querySelector("#cadastro");
+    const login = document.querySelector("#login");
+    if (!modal || !cadastro || !login) return;
+    const maxHeight = Math.max(cadastro.scrollHeight, login.scrollHeight);
+    modal.style.minHeight = maxHeight + "px";
+  }
+
+  adjustModalHeight();
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", adjustModalHeight);
+  });
+
+  // validação de cmapos da área de login
+  (function setupLoginEmailValidation() {
+    const loginRoot = document.querySelector("#login") || document;
+    const fLogin = loginRoot.querySelector("form");
+    if (!fLogin) return;
+
+    const emailLogin =
+      fLogin.querySelector("#emailLogin") ||
+      fLogin.querySelector('input[type="email"]');
+
+    if (!emailLogin) return;
+
+    let eLoginEmail = fLogin.querySelector("#erro-login-email");
+    if (!eLoginEmail) {
+      eLoginEmail = document.createElement("span");
+      eLoginEmail.className = "erro";
+      eLoginEmail.id = "erro-login-email";
+      emailLogin.insertAdjacentElement("afterend", eLoginEmail);
+    }
+
+    const validaEmailLogin = () => {
+      const v = (emailLogin.value || "").trim();
+      if (!v) return setErr(emailLogin, eLoginEmail, "Informe o e-mail.");
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      return setErr(emailLogin, eLoginEmail, ok ? "" : "E-mail inválido.");
+    };
+
+    emailLogin.addEventListener("blur", validaEmailLogin);
+    fLogin.addEventListener("submit", (e) => {
+      const ok = validaEmailLogin();
+      if (!ok) {
+        e.preventDefault();
+        emailLogin.focus();
+      }
+    });
+  })();
+
+  //agendamento e bloqueio do calendário para datas do passado.
+  (function () {
+    const btnAgendar = document.querySelector("#btnAgendarRetirada");
+    const containerAgendar = document.querySelector(".containerAgendar");
+    const modalAgendar = containerAgendar?.querySelector(".modal");
+    const closeAgendar = containerAgendar?.querySelector(".close");
+
+    const f = document.querySelector("#formAgendar");
+    const nome  = f?.querySelector("#agendarNome");
+    const pedido= f?.querySelector("#agendarPedido");
+    const data  = f?.querySelector("#agendarData");
+    let   hora  = f?.querySelector("#agendarHora");
+
+    const eNome   = f?.querySelector("#erro-agendar-nome");
+    const ePedido = f?.querySelector("#erro-agendar-pedido");
+    const eData   = f?.querySelector("#erro-agendar-data");
+    const eHora   = f?.querySelector("#erro-agendar-hora");
+
+    const setErrLoc = (el, span, msg) => {
+      if (el) el.classList.toggle("input-erro", !!msg);
+      if (span) span.textContent = msg || "";
+      return !msg;
+    };
+
+    const showAgendar = () => {
+      if (!containerAgendar) return;
+      containerAgendar.style.display = "flex";
+      document.body.classList.add("modal-open");
+      modalAgendar?.focus?.();
+    };
+
+    const hideAgendar = () => {
+      if (!containerAgendar) return;
+      containerAgendar.style.display = "none";
+      document.body.classList.remove("modal-open");
+    };
+
+    // cria dropdown com intervalos de 1h entre os horarios permitidos
+    const ensureHourDropdown = () => {
+      if (!f) return;
+      const makeSelect = () => {
+        const sel = document.createElement("select");
+        sel.id = "agendarHora";
+        sel.name = (hora && hora.name) || "agendarHora";
+        sel.required = true;
+
+        const opt0 = document.createElement("option");
+        opt0.value = "";
+        opt0.textContent = "Selecione um horário";
+        sel.appendChild(opt0);
+
+        for (let h = 10; h <= 17; h++) {
+          const label = `${String(h).padStart(2,"0")}:00`;
+          const opt = document.createElement("option");
+          opt.value = label;
+          opt.textContent = label;
+          sel.appendChild(opt);
+        }
+        return sel;
+      };
+
+      if (hora && hora.tagName?.toLowerCase() === "select") {
+        const rebuilt = makeSelect();
+        const current = hora.value;
+        hora.innerHTML = "";
+        Array.from(rebuilt.options).forEach(o => hora.appendChild(o.cloneNode(true)));
+        if ([...hora.options].some(o => o.value === current)) hora.value = current;
+      } else {
+        const sel = makeSelect();
+        if (hora && hora.parentNode) {
+          hora.parentNode.replaceChild(sel, hora);
+        } else if (data && data.parentNode) {
+          data.parentNode.insertBefore(sel, data.nextSibling);
+        } else {
+          f.appendChild(sel);
+        }
+        hora = sel;
+      }
+
+      hora.addEventListener("change", validaHora);
+    };
+
+    // bloqueia datas passadas e finais de semana
+    const setupDateConstraints = () => {
+      if (!data) return;
+      const toYMD = (d) => {
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        return `${yyyy}-${mm}-${dd}`;
+      };
+      const todayStr = toYMD(new Date());
+      data.setAttribute("min", todayStr);
+
+      data.addEventListener("change", validaData);
+      if (data.value) validaData();
+    };
+
+    const isWeekend = (d) => {
+      const day = d.getDay(); // 0 dom, 6 sáb
+      return day === 0 || day === 6;
+    };
+
+    const validaData = () => {
+      if (!data) return true;
+      const v = data.value;
+      if (!v) return setErrLoc(data, eData, "Selecione uma data.");
+
+      const picked = new Date(v + "T00:00:00");
+      const minStr = data.getAttribute("min") || v;
+      const today = new Date(minStr + "T00:00:00");
+
+      if (picked < today) {
+        data.value = "";
+        return setErrLoc(data, eData, "Não é possível escolher datas passadas.");
+      }
+      if (isWeekend(picked)) {
+        data.value = "";
+        return setErrLoc(data, eData, "Selecione um dia útil (segunda a sexta).");
+      }
+      return setErrLoc(data, eData, "");
+    };
+
+    const validaHora = () => {
+      if (!hora) return true;
+      const v = hora.value;
+      if (!v) return setErrLoc(hora, eHora, "Informe um horário.");
+      const H = Number(String(v).split(":")[0]);
+      if (Number.isNaN(H) || H < 10 || H > 17) {
+        return setErrLoc(hora, eHora, "Horário permitido: 10:00–17:00.");
+      }
+      return setErrLoc(hora, eHora, "");
+    };
+
+    const validaNome   = () => setErrLoc(nome,   eNome,   (nome?.value || "").trim() ? "" : "Informe o nome.");
+    const validaPedido = () => setErrLoc(pedido, ePedido, (pedido?.value || "").trim() ? "" : "Informe o número do pedido.");
+
+    btnAgendar?.addEventListener("click", (e) => { e.preventDefault(); showAgendar(); });
+    closeAgendar?.addEventListener("click", hideAgendar);
+    containerAgendar?.addEventListener("click", (e) => { if (e.target === containerAgendar) hideAgendar(); });
+
+    nome?.addEventListener("blur",   validaNome);
+    pedido?.addEventListener("blur", validaPedido);
+
+    ensureHourDropdown();
+    setupDateConstraints();
+
+    f?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const ok = validaNome() & validaPedido() & validaData() & validaHora();
+      if (ok) {
+        alert("Agendamento enviado! Entraremos em contato para confirmar.");
+        hideAgendar();
+        f.reset();
+      }
+    });
+  })();
+
 });
