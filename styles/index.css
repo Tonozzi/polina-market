@@ -29,6 +29,7 @@ body{
 
 header {
   color: white;
+  background: linear-gradient(125deg, #001e33, #126ba7e6, #007bd14f, #0b6bab, #001e33);
 }
 
 h2{
@@ -190,7 +191,18 @@ ul li img {
   height: 120px;
   background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
   pointer-events: none;
-  z-index: 2;
+  z-index: 1
+  ;
+}
+.overlay-gradiente2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+  pointer-events: none;
+  z-index:1;
 }
 
 .carrossel{
@@ -228,6 +240,7 @@ ul li img {
   width: 100%;
   background-color: #b53323;
   padding: 10px 0;
+  z-index:2;
 }
 
 .dots input[type="radio"] {
@@ -445,7 +458,8 @@ label a:hover span {
 #sobre-nos{
   background-color: #b53323;
   padding:20px 50px;
-  margin-top:10px;
+  margin-top:
+  0px;
   max-width: 900px;
 }
 
@@ -456,7 +470,7 @@ label a:hover span {
 
 #servicos{
   background-color: white;
-  margin-top:10px;
+  margin-top:0px;
   padding:20px 50px;
 }
 
