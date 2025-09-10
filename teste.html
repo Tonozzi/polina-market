@@ -2,46 +2,107 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
-<title>Parallax </title>
+<title>Parallax</title>
 <style>
-  html, body {
-    height: 100%;
-    margin: 0;
+  html, body { height: 100%; margin: 0; }
+
+  /* Controles em VW (escala responsiva) */
+  :root{
+    /* larguras relativas de cada camada */
+    --w-cathedral: 65vw;
+    --w-moscow:    90vw;
+    --w-invalf:    60vw;
+    --w-praga:     42vw;
+    --w-alfa:      70vw;  /* alfabeto branco (no-repeat) */
+    --w-silhueta: 120vw;
+
+    /* deslocamentos (velocidade/sentido) */
+    --mv-cathedral:  80vw;   /* → */
+    --mv-moscow:    -60vw;   /* ← */
+    --mv-invalf:     50vw;   /* → */
+    --mv-praga:      40vw;   /* → */
+    --mv-alfa:       -2vw;   /* quase fixo */
+    --mv-silhueta:  -35vw;   /* ← */
+    --mv-ceu:      -120vw;   /* ← (mais rápido) */
   }
 
   body {
-    min-height: 100%;
-    background-image:
-      url('assets/catedral.png'),    
-      url("assets/pngwing.com.png"), 
-      url("assets/Alfabeto\ em\ branco.png"),
-      url('assets/ceu.jpg');
+    min-height:100vh;
 
-    background-repeat: repeat-x, repeat-x, repeat-x, no-repeat;
+    background-image:
+      url("assets/catedral.png"),
+      url("assets/SilhuetaMOSCOW.png"),
+      url("assets/invertidoalfabeto.png"),
+      url("assets/praga.png"),
+      url("assets/aLFABETOBRANCOR.png"),
+      url("assets/silhueta branca.png"),
+      url("assets/ceu.png");
+
+    background-repeat:
+      repeat-x,
+      repeat-x,
+      repeat-x,
+      repeat-x,
+      repeat-x,
+      repeat-x,
+      no-repeat;
 
     background-position:
       0 bottom,
-      0 bottom,
-      0 bottom,
-      center top;
+      0 calc(100% - 20px),
+      0 110px,
+      0 calc(100% - 60px),
+      center 32px,
+      0 calc(100% - 90px),
+      0 top; /* começa alinhado à esquerda pro céu também */
 
-   
+    /* tamanhos em vw → tudo escala com a tela */
     background-size:
-      800px,  
-      auto,
-      auto,
-      cover;
+      var(--w-cathedral) auto,
+      var(--w-moscow)   auto,
+      var(--w-invalf)   auto,
+      var(--w-praga)    auto,
+      var(--w-alfa)     auto,
+      var(--w-silhueta) auto,
+      cover; /* céu ocupa tudo */
 
-    animation: parallax 50s linear infinite;
+    background-attachment:
+      scroll, scroll, scroll, scroll, scroll, scroll, fixed;
+
+    will-change: background-position;
+    animation: parallax 48s linear infinite;
   }
 
   @keyframes parallax {
+    0% {
+      background-position:
+        0 bottom,
+        0 calc(100% - 20px),
+        0 110px,
+        0 calc(100% - 60px),
+        center 32px,
+        0 calc(100% - 90px),
+        0 top;
+    }
     100% {
       background-position:
-        -800px bottom,   /* catedral */
-        -500px bottom,   /* pngwing */
-         500px bottom,   
-        center top;      /* céu */
+        var(--mv-cathedral) bottom,
+        var(--mv-moscow)   calc(100% - 20px),
+        var(--mv-invalf)   110px,
+        var(--mv-praga)    calc(100% - 60px),
+        var(--mv-alfa)     32px,
+        var(--mv-silhueta) calc(100% - 90px),
+        var(--mv-ceu)      top;
+    }
+  }
+
+  /* opcional: pequenos ajustes em telas muito grandes/pequenas */
+  @media (max-width: 700px){
+    :root{
+      --w-cathedral: 80vw;
+      --w-praga:     55vw;
+      --w-invalf:    80vw;
+      --w-alfa:      85vw;
     }
   }
 </style>

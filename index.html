@@ -23,7 +23,7 @@
   </head>
 
   <body>
-    <!-- Acesso rápido ao conteúdo principal para leitores de tela e navegação por teclado -->
+    <!-- Acesso ao conteúdo principal para navegação via teclado -->
     <a href="#conteudo-principal" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">Pular para o conteúdo principal</a>
 
     <header role="banner">
@@ -33,7 +33,7 @@
           alt="Polina Market — Mercado de produtos do leste europeu"
         />
       </div>
-      <!-- Navegação principal do site -->
+      <!-- navegação principal do site -->
       <nav aria-label="Navegação principal">
         <ul class="headerLista">
           <li><a href="#sobre-nos">Sobre nós</a></li>
@@ -63,6 +63,7 @@
     
     <main class="main" id="conteudo-principal" role="main">
       <section class="carosselContainer" aria-label="Destaques">
+        <div class="overlay-gradiente"></div>
         <div class="carrossel">
           <div class="slideAtivo">
             <img src="assets/slide1.png" alt="Bem-vindo ao site" />
@@ -75,8 +76,7 @@
           </div>
         </div>
 
-        <!-- Os controles abaixo são rádios usados como 'bolinhas' do carrossel.
-             Eles são visíveis/operáveis por teclado e cada um recebe rótulo. -->
+     
         <div class="dots" role="tablist" aria-label="Selecionar slide">
           <input type="radio" name="slide" id="dot1" checked aria-label="Slide 1">
           <label for="dot1"></label>

@@ -1,80 +1,104 @@
-
-
-body{
-    font-family: "Nata Sans";
-    background-image: url(../assets/back1.png);
-  margin: 0;
-  padding: 0; 
-    
+:root{
+  --w-cathedral: 65vw;
+  --w-moscow:    90vw;
+  --w-invalf:    60vw;
+  --w-praga:     42vw;
+  --w-alfa:      70vw;
+  --w-silhueta: 120vw;
+  --max-cathedral: 900px;
+  --max-moscow:   1400px;
+  --max-invalf:    900px;
+  --max-praga:     700px;
+  --max-alfa:     1100px;
+  --max-silhueta: 1800px;
+  --mv-cathedral:  80vw;
+  --mv-moscow:    -60vw;
+  --mv-invalf:     50vw;
+  --mv-praga:      40vw;
+  --mv-alfa:       -2vw;
+  --mv-silhueta:  -35vw;
+  --mv-ceu:      -120vw;
 }
 
+body{
+  font-family: "Nata Sans";
+  background-image: url(../assets/back1.png);
+  margin: 0;
+  padding: 0;
+}
 
-    header {
-        background-color:#0a69ab ;
-        color:white
+header {
+  color: white;
+}
 
+h2{
+  color: #0a69ab;
+  text-align: center;
+  font-size: 40px;
+}
 
-    }
-    .logo{
-        width: 100%;
-        text-align: center;
-    }
-    #logoHeader{
-        max-width: 300px;
-         display: inline-block;
-    }
+p{
+  color: gray;
+  font-size: 20px;
+  text-align: center;
+}
+
+a:link,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+.logo{
+  width: 100%;
+  text-align: center;
+}
+
+#logoHeader{
+  max-width: 300px;
+  display: inline-block;
+}
+
+nav{
+  background-color:#b53323;
+}
+
+nav ul{
+  display: flex;
+  justify-content: space-evenly;
+}
+
 nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-.headerLista li:hover{
-  background-color: #f6c439;
-}
-nav ul li {
-  position: relative; 
-}
 
+nav ul li {
+  position: relative;
+}
 
 nav ul li a {
   color: white;
   text-decoration: none;
   display: block;
-  padding: 10px 30px 10px 30px
+  padding: 10px 30px 10px 30px;
 }
 
-
-.submenu {
-  display: none; 
-  left: 0;              
-  top: 100%;            
-  background-color: #f6c438a1; 
-  padding: 0;
-  list-style: none;
-  margin: 0;
-  z-index: 10;
-  min-width: 200px;     
-  position: absolute;
+ul li img {
+  width: 20px;
+  height: 20px;
 }
 
-/* itens do submenu */
-.submenu li a {
-  padding: 8px 12px;
-  white-space: nowrap; 
+.headerLista li:hover{
+  background-color: #f6c439;
 }
-
-
-.dropdown:hover > .submenu {
-  display: block; 
-}
-
 
 .dropdown > a {
-  display: flex;           
-  align-items: center;     
-  gap: 6px; 
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-
 
 .dropdown > a img {
   width: 16px;
@@ -82,36 +106,108 @@ nav ul li a {
   display: block;
 }
 
-
-ul li img {
-  width: 20px;
-  height: 20px;
+.submenu {
+  display: none;
+  left: 0;
+  top: 100%;
+  background-color: #f6c438a1;
+  padding: 0;
+  list-style: none;
+  margin: 0;
+  z-index: 10;
+  min-width: 200px;
+  position: absolute;
 }
+
+.submenu li a {
+  padding: 8px 12px;
+  white-space: nowrap;
+}
+
+.dropdown:hover > .submenu {
+  display: block;
+}
+
 .containerCadastro{
   display: flex;
-
 }
-#cadastroNav {
+
+#cadastroNav,
+#loginNav {
   display: flex;
   align-items: center;
 }
-.carrossel {
-  border-bottom: 5px solid #b53323;
-  border-top: 5px solid #b53323;
+
+.carosselContainer {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  min-height: 420px;
+  padding-bottom: 10px;
+  background-image:
+    url("../assets/catedral.png"),
+    url("../assets/SilhuetaMOSCOW.png"),
+    url("../assets/invertidoalfabeto.png"),
+    url("../assets/praga.png"),
+    url("../assets/aLFABETOBRANCOR.png"),
+    url("../assets/silhueta branca.png"),
+    url("../assets/ceu.png");
+  background-repeat:
+    repeat-x,
+    repeat-x,
+    repeat-x,
+    repeat-x,
+    repeat-x,
+    repeat-x,
+    no-repeat;
+  background-position:
+    0 calc(100% - 40px),
+    0 calc(100% - 20px),
+    0 110px,
+    0 calc(100% - 60px),
+    center 32px,
+    0 calc(100% - 90px),
+    0 top;
+  background-size:
+    700px auto,
+    800px auto,
+    900px auto,
+    300px auto,
+    1100px auto,
+    1000px auto,
+    cover;
+  background-attachment: scroll, scroll, scroll, scroll, scroll, scroll, scroll;
+  will-change: background-position;
+  animation: parallax-carrossel 48s linear infinite;
+  overflow: hidden;
+}
+
+.overlay-gradiente {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+  pointer-events: none;
+  z-index: 2;
+}
+
+.carrossel{
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  justify-content: center;
+  display: flex;
 }
 
 .carrossel > div {
   display: none;
 }
 
-
 .carrossel > .slideAtivo,
 .carrossel > .ativo {
   display: block;
-}
-.carosselContainer{
-  background-color: #393b3d75;
-padding-bottom: 10px;
 }
 
 .carrossel > div img {
@@ -120,39 +216,45 @@ padding-bottom: 10px;
   display: block;
 }
 
+.ativo{
+  max-width: 1000px;
+  border: 5px solid #b53323;
+}
+
 .dots {
   display: flex;
   justify-content: center;
-  gap: 8px; 
-  margin:  15px;
+  gap: 8px;
+  width: 100%;
+  background-color: #b53323;
+  padding: 10px 0;
 }
 
 .dots input[type="radio"] {
   display: none;
 }
 
-
 .dots input[type="radio"] + label::before {
   content: "";
   display: inline-block;
   width: 14px;
   height: 14px;
-  
   border-radius: 50%;
   background-color: #ffffff;
   cursor: pointer;
   transition: 0.3s;
 }
 
-
 .dots input[type="radio"]:checked + label::before {
   background-color: #0a69ab;
   box-shadow: 0 0 5px rgba(10, 105, 171, 0.5);
 }
+
 .botoesCarossel{
   display: none;
   justify-content: center;
 }
+
 #cBotao{
   border-radius: 100%;
   display: flex;
@@ -161,29 +263,19 @@ padding-bottom: 10px;
   border-color: #0a69ab;
   background-color: #ffffff00;
 }
+
 #cBotao img{
-align-items: center;
+  align-items: center;
 }
 
-h2{
-  color: #0a69ab;
-  text-align: center;
-  font-size: 40px;
-  
-}
-p{
-  color: gray;
-  font-size: 20px;
-  text-align: center;
-}
 .categoria{
   display: flex;
   width: 95%;
-
 }
+
 #produtos {
   text-align: center;
-  font-family: "Nata Sans"
+  font-family: "Nata Sans";
 }
 
 #produtos h2 {
@@ -195,14 +287,12 @@ p{
   color: #555;
 }
 
-
 #produtos #categoria {
   display: inline-block;
-  width: 180px;                /* ajusta se precisar */
+  width: 180px;
   text-align: center;
   vertical-align: top;
 }
-
 
 .imagensCategorias {
   width: 120px;
@@ -213,51 +303,38 @@ p{
   object-fit: cover;
   margin: 10px;
   transition: transform .2s ease, border-color .2s ease, background-color .2s ease;
-  display: inline-block; /* garante caixa fixa */
+  display: inline-block;
   transform-origin: center;
-
 }
+
 label a {
-display: flex;
-flex-direction: column-reverse;
-align-items: center;
-text-decoration: none;
-
-
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  text-decoration: none;
 }
 
 a span {
   display: block;
   font-family: "Nata Sans";
   color: #004aad;
-  font-size: large;            /* fixa o tamanho base */
+  font-size: large;
   line-height: 1.2;
-  min-height: 1.6em;           /* reserva espaço p/ 1 linha */
+  min-height: 1.6em;
   transition: transform .2s ease, color .2s ease;
   will-change: transform;
-}
-a:link,
-a:visited {
-  color: inherit;
-  text-decoration: none;
 }
 
 label a:hover .imagensCategorias {
   border-color: #f6c439;
   background-color: #004aad;
-  transform: scale(1.08);   /* efeito visual, sem mudar o fluxo */
-  /* remova estas linhas se existirem no seu CSS:
-     width: 140px;
-     height: 140px;
-  */
+  transform: scale(1.08);
 }
-
 
 label a:hover span {
   color: #f6c439;
   transform: scale(1.05);
 }
-
 
 .footer{
   display: flex;
@@ -265,96 +342,115 @@ label a:hover span {
   justify-content: space-between;
   align-items: center;
 }
-.containerLogoF{
-  width:30%;
-  justify-content: center;
-  display: flex;
-}
-.containerLogoF img {
-  width:100%;
-  max-width: 300px;
-  height:auto;
 
-
+.footer > * {
+  margin: 2%;
+  padding: 0;
+  width: 33%;
 }
+
 .containerLeft{
   display: flex;
   height: 100%;
   justify-content: space-around;
 }
+
 .unidades{
   align-items: center;
   text-align: center;
-  
   height: 100%;
 }
-.infosLaterais{
-  display: flex;
-  flex-direction: column;
-}
+
 .footerListas {
-  list-style:  none;
+  list-style: none;
   text-align: center;
   color: white;
   font-size: 1em;
   font-weight: 600;
   padding: 0;
 }
-.footerListas li a:hover{
-  color:#004aad;
-  font-weight: 700;
 
-}
-#atendimentoInfo{
-  display: flex;
-}
-.footerListas h3{
-  font-size: 1.5em;
-      position: relative;
-    bottom: 14px;
-}
-#atendimentoTel{
-  display: flex;
-  flex-direction: column;
-}
 .footerListas li{
   margin-bottom: 10px;
   width: 100%;
 }
-#atendimentoTel h1 {
-  color: white;
+
+.footerListas li a:hover{
+  color:#004aad;
+  font-weight: 700;
 }
-#atendimentoP{
-color:#004aad;
-text-align: justify;
+
+.footerListas h3{
+  font-size: 1.5em;
+  position: relative;
+  bottom: 14px;
 }
+
 .tituloLista {
   font-size: 1.5em;
   font-weight: 700;
   margin-bottom: 10px;
   color: white;
 }
-.footer > * {
-  margin: 2%;
-  padding: 0;
-  width: 33%;
+
+.containerLogoF{
+  width:30%;
+  justify-content: center;
+  display: flex;
 }
+
+.containerLogoF img {
+  width:100%;
+  max-width: 300px;
+  height:auto;
+}
+
+.infosLaterais{
+  display: flex;
+  flex-direction: column;
+}
+
 .infosLaterais a{
   color:white;
 }
+
 .infosLaterais a:hover{
   color:#004aad;
-  font-weight: 700
-
+  font-weight: 700;
 }
+
+#atendimentoInfo{
+  display: flex;
+}
+
+#atendimentoTel{
+  display: flex;
+  flex-direction: column;
+}
+
+#atendimentoTel h1 {
+  color: white;
+}
+
+#atendimentoP{
+  color:#004aad;
+  text-align: justify;
+}
+
+.containerInformacoes{
+  display: flex;
+  justify-content: center;
+}
+
 #sobre-nos{
   background-color: #b53323;
   padding:20px 50px;
   margin-top:10px;
   max-width: 900px;
-
 }
-#sobre-nos h2,p{
+
+#sobre-nos h2,
+#sobre-nos p{
   color: white;
 }
 
@@ -362,82 +458,102 @@ text-align: justify;
   background-color: white;
   margin-top:10px;
   padding:20px 50px;
-
 }
+
 #servicos h2{
   margin:0px;
   color:#0a69ab;
-  
 }
+
 #servicos p{
   margin-top: 2px;
-  color:#0a69ab
-
+  color:#0a69ab;
 }
+
 .grid-servicos{
   display: flex;
   flex-direction: column;
-  display: flex;
-  align-items: center
-
-}
-.servico > h3, .servico p{
-  color:#0a6bad;
-  margin: 0px
-}
-.servico img {
-width: 50px;
-height: auto;
-
-
+  align-items: center;
 }
 
-.servico  p{ 
-  margin-bottom: 10px
-}
 .servico{
-display: flex;
-align-items: center;
-flex-direction: column;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.servico > h3,
+.servico p{
+  color:#0a6bad;
+  margin: 0px;
+}
+
+.servico  p{
+  margin-bottom: 10px;
+}
+
+.servico img {
+  width: 50px;
+  height: auto;
+}
+
+@media (max-width: 700px){
+  :root{
+    --w-cathedral: 80vw;
+    --w-praga:     55vw;
+    --w-invalf:    80vw;
+    --w-alfa:      85vw;
+  }
+
+  .carosselContainer{
+    min-height: 360px;
+  }
 }
 
 @media (min-width: 1200px){
-.carrossel{
-  max-width: 100%;
-  justify-content: center;
-  display: flex;
+  .carrossel{
+    max-width: 100%;
+    justify-content: center;
+    display: flex;
+  }
 
-}
-.carosselContainer{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
+  .carosselContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-}
-.ativo{
-  max-width: 1000px;
-  border: 5px solid #b53323;
+  :root{
+    --mv-cathedral:  900px;
+    --mv-moscow:    -700px;
+    --mv-invalf:     600px;
+    --mv-praga:      500px;
+    --mv-alfa:       -40px;
+    --mv-silhueta:  -400px;
+    --mv-ceu:      -1600px;
+  }
 
+  @keyframes parallax-carrossel {
+    0% {
+      background-position:
+        0 calc(100% - 40px),
+        0 calc(100% - 20px),
+        0 110px,
+        0 calc(100% - 60px),
+        center 32px,
+        0 calc(100% - 90px),
+        0 top;
+    }
+    100% {
+      background-position:
+        var(--mv-cathedral) bottom,
+        var(--mv-moscow)   calc(100% - 20px),
+        var(--mv-invalf)   110px,
+        var(--mv-praga)    calc(100% - 60px),
+        var(--mv-alfa)     32px,
+        var(--mv-silhueta) calc(100% - 90px),
+        var(--mv-ceu)      top;
+    }
+  }
 }
-nav ul{
-  display: flex;
-  justify-content: space-evenly;
-}
-#cadastroNav{
-  display: flex;
-  align-items: center;
-}
-#loginNav{
-  display: flex;
-  align-items: center;
-}
-.containerInformacoes{
-  display: flex;
-justify-content: center;
-}
-}
-
-
-
 
